@@ -26,9 +26,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'yarn'
+          cache: "yarn"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: "maven"
+
       - run: yarn
       - uses: nrwl/nx-set-shas@v4
 
       - run: npx nx-cloud record -- nx format:check
-      - run: npx nx affected -t lint test build
+      - run: npx nx affected -t lint test build --parallel=1

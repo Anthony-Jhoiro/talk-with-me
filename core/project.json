@@ -9,33 +9,24 @@
       "options": {
         "root": "core"
       },
-      "dependsOn": [
-        "^install"
-      ],
-      "outputs": [
-        "{workspaceRoot}/core/target"
-      ]
+      "dependsOn": ["^install"],
+      "outputs": ["{workspaceRoot}/core/target"]
     },
     "install": {
       "executor": "@nxrocks/nx-spring-boot:install",
       "options": {
         "root": "core"
       },
-      "dependsOn": [
-        "^install"
-      ],
-      "outputs": [
-        "{workspaceRoot}/core/target"
-      ]
+      "dependsOn": ["^install"],
+      "outputs": ["{workspaceRoot}/core/target"]
     },
     "test": {
       "executor": "@nxrocks/nx-spring-boot:test",
       "options": {
-        "root": "core"
+        "root": "core",
+        "args": ["-DbuildDirectory=\"target_test\""]
       },
-      "outputs": [
-        "{workspaceRoot}/core/target"
-      ]
+      "outputs": ["{workspaceRoot}/core/target_test"]
     },
     "clean": {
       "executor": "@nxrocks/nx-spring-boot:clean",
@@ -48,27 +39,21 @@
       "options": {
         "root": "core"
       },
-      "dependsOn": [
-        "^install"
-      ]
+      "dependsOn": ["^install"]
     },
     "serve": {
       "executor": "@nxrocks/nx-spring-boot:serve",
       "options": {
         "root": "core"
       },
-      "dependsOn": [
-        "^install"
-      ]
+      "dependsOn": ["^install"]
     },
     "build-image": {
       "executor": "@nxrocks/nx-spring-boot:build-image",
       "options": {
         "root": "core"
       },
-      "outputs": [
-        "{workspaceRoot}/core/target"
-      ]
+      "outputs": ["{workspaceRoot}/core/target"]
     },
     "build-info": {
       "executor": "@nxrocks/nx-spring-boot:build-info",

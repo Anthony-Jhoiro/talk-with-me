@@ -1,19 +1,12 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
-    "production": [
-      "default"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": ["default"],
     "sharedGlobals": []
   },
   "nxCloudAccessToken": "MDFhMmI2MGQtODQwYS00NGU3LWI4ODAtNWYyY2FiNDM3MDQ4fHJlYWQtd3JpdGU=",
-  "plugins": [
-    "@nxrocks/nx-spring-boot"
-  ],
+  "plugins": ["@nxrocks/nx-spring-boot"],
   "targetDefaults": {
     "install": {
       "cache": true
