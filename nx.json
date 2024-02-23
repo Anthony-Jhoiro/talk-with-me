@@ -10,5 +10,13 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudAccessToken": "MDFhMmI2MGQtODQwYS00NGU3LWI4ODAtNWYyY2FiNDM3MDQ4fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "MDFhMmI2MGQtODQwYS00NGU3LWI4ODAtNWYyY2FiNDM3MDQ4fHJlYWQtd3JpdGU=",
+  "plugins": [
+    "@nxrocks/nx-spring-boot"
+  ],
+  "targetDefaults": {
+    "install": {
+      "cache": true
+    }
+  }
 }
