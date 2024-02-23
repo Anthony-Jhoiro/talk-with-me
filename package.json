@@ -8,6 +8,7 @@
   "devDependencies": {
     "@nx/js": "18.0.4",
     "@nx/workspace": "18.0.4",
+    "@nxrocks/nx-spring-boot": "^9.3.0",
     "nx": "18.0.4"
   }
 }
