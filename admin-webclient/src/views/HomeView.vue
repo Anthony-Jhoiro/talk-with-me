@@ -7,18 +7,15 @@ import LoadingIndicator from '../components/LoadingIndicator.vue';
 import CompanionCard from '../components/CompanionCard.vue';
 
 const pending = ref(true);
-const errorMessage = ref<string|null>(null);
-const companions = ref<Companion[]|null>(null);
+const errorMessage = ref<string | null>(null);
+const companions = ref<Companion[] | null>(null);
 
 onMounted(() => {
   listCompanions()
-    .then(res => companions.value = res._embedded.companions)
-    .catch(e => errorMessage.value = e)
-    .finally(() => pending.value = false)
-})
-
-
-
+    .then((res) => (companions.value = res._embedded.companions))
+    .catch((e) => (errorMessage.value = e))
+    .finally(() => (pending.value = false));
+});
 </script>
 
 <template>
@@ -39,7 +36,8 @@ onMounted(() => {
       <CompanionCard :companion="companion">
         <template #action-row>
           <div class="flex justify-end gap-3">
-            <router-link :to="{name: 'talk', params: {id: companion.id}}"
+            <router-link
+              :to="{ name: 'talk', params: { id: companion.id } }"
               class="py-3 px-5 bg-teal hover:bg-teal-700 text-white flex items-center gap-2 rounded transition-colors"
             >
               <ChatBubbleOvalLeftEllipsisIcon class="h-5" />

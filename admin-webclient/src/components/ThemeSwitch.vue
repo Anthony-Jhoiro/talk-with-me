@@ -14,11 +14,11 @@ const setTheme = (newTheme: Theme) => {
 
 onMounted(() => {
   const isDarkModePreferred = window.matchMedia(
-    '(prefers-color-scheme: dark)'
+    '(prefers-color-scheme: dark)',
   ).matches;
 
   const themeFromLocalStorage = localStorage.getItem(
-    LOCAL_STORAGE_THEME_KEY
+    LOCAL_STORAGE_THEME_KEY,
   ) as Theme;
 
   if (themeFromLocalStorage) {
@@ -31,7 +31,6 @@ onMounted(() => {
 watch(darkMode, (selected) => {
   setTheme(selected ? 'dark' : 'light');
 });
-
 </script>
 
 <template>
@@ -111,10 +110,12 @@ watch(darkMode, (selected) => {
   border-radius: var(--container-radius);
   overflow: hidden;
   cursor: pointer;
-  -webkit-box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25),
-  0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
-  box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25),
-  0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+  -webkit-box-shadow:
+    0em -0.062em 0.062em rgba(0, 0, 0, 0.25),
+    0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0em -0.062em 0.062em rgba(0, 0, 0, 0.25),
+    0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
   transition: var(--transition);
@@ -126,10 +127,12 @@ watch(darkMode, (selected) => {
   position: absolute;
   z-index: 1;
   inset: 0;
-  -webkit-box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset,
-  0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
-  box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset,
-  0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+  -webkit-box-shadow:
+    0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset,
+    0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+  box-shadow:
+    0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset,
+    0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
   border-radius: var(--container-radius);
 }
 
@@ -145,14 +148,16 @@ watch(darkMode, (selected) => {
   left: var(--circle-container-offset);
   top: var(--circle-container-offset);
   border-radius: var(--container-radius);
-  -webkit-box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
-  inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
-  0 0 0 0.625em rgba(255, 255, 255, 0.1),
-  0 0 0 1.25em rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
-  inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
-  0 0 0 0.625em rgba(255, 255, 255, 0.1),
-  0 0 0 1.25em rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow:
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    0 0 0 0.625em rgba(255, 255, 255, 0.1),
+    0 0 0 1.25em rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    0 0 0 0.625em rgba(255, 255, 255, 0.1),
+    0 0 0 1.25em rgba(255, 255, 255, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -171,12 +176,16 @@ watch(darkMode, (selected) => {
   margin: auto;
   border-radius: var(--container-radius);
   background-color: var(--sun-bg);
-  -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
-  0em -0.062em 0.062em 0em #a1872a inset;
-  box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
-  0em -0.062em 0.062em 0em #a1872a inset;
-  -webkit-filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
-  filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+  -webkit-box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #a1872a inset;
+  box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #a1872a inset;
+  -webkit-filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25))
+    drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25))
+    drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
   overflow: hidden;
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
@@ -191,10 +200,12 @@ watch(darkMode, (selected) => {
   height: 100%;
   background-color: var(--moon-bg);
   border-radius: inherit;
-  -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
-  0em -0.062em 0.062em 0em #969696 inset;
-  box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
-  0em -0.062em 0.062em 0em #969696 inset;
+  -webkit-box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #969696 inset;
+  box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #969696 inset;
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
   transition: var(--transition);
@@ -235,36 +246,38 @@ watch(darkMode, (selected) => {
   position: absolute;
   bottom: -0.625em;
   left: 0.312em;
-  -webkit-box-shadow: 0.937em 0.312em var(--clouds-color),
-  -0.312em -0.312em var(--back-clouds-color),
-  1.437em 0.375em var(--clouds-color),
-  0.5em -0.125em var(--back-clouds-color),
-  2.187em 0 var(--clouds-color),
-  1.25em -0.062em var(--back-clouds-color),
-  2.937em 0.312em var(--clouds-color),
-  2em -0.312em var(--back-clouds-color),
-  3.625em -0.062em var(--clouds-color),
-  2.625em 0em var(--back-clouds-color),
-  4.5em -0.312em var(--clouds-color),
-  3.375em -0.437em var(--back-clouds-color),
-  4.625em -1.75em 0 0.437em var(--clouds-color),
-  4em -0.625em var(--back-clouds-color),
-  4.125em -2.125em 0 0.437em var(--back-clouds-color);
-  box-shadow: 0.937em 0.312em var(--clouds-color),
-  -0.312em -0.312em var(--back-clouds-color),
-  1.437em 0.375em var(--clouds-color),
-  0.5em -0.125em var(--back-clouds-color),
-  2.187em 0 var(--clouds-color),
-  1.25em -0.062em var(--back-clouds-color),
-  2.937em 0.312em var(--clouds-color),
-  2em -0.312em var(--back-clouds-color),
-  3.625em -0.062em var(--clouds-color),
-  2.625em 0em var(--back-clouds-color),
-  4.5em -0.312em var(--clouds-color),
-  3.375em -0.437em var(--back-clouds-color),
-  4.625em -1.75em 0 0.437em var(--clouds-color),
-  4em -0.625em var(--back-clouds-color),
-  4.125em -2.125em 0 0.437em var(--back-clouds-color);
+  -webkit-box-shadow:
+    0.937em 0.312em var(--clouds-color),
+    -0.312em -0.312em var(--back-clouds-color),
+    1.437em 0.375em var(--clouds-color),
+    0.5em -0.125em var(--back-clouds-color),
+    2.187em 0 var(--clouds-color),
+    1.25em -0.062em var(--back-clouds-color),
+    2.937em 0.312em var(--clouds-color),
+    2em -0.312em var(--back-clouds-color),
+    3.625em -0.062em var(--clouds-color),
+    2.625em 0em var(--back-clouds-color),
+    4.5em -0.312em var(--clouds-color),
+    3.375em -0.437em var(--back-clouds-color),
+    4.625em -1.75em 0 0.437em var(--clouds-color),
+    4em -0.625em var(--back-clouds-color),
+    4.125em -2.125em 0 0.437em var(--back-clouds-color);
+  box-shadow:
+    0.937em 0.312em var(--clouds-color),
+    -0.312em -0.312em var(--back-clouds-color),
+    1.437em 0.375em var(--clouds-color),
+    0.5em -0.125em var(--back-clouds-color),
+    2.187em 0 var(--clouds-color),
+    1.25em -0.062em var(--back-clouds-color),
+    2.937em 0.312em var(--clouds-color),
+    2em -0.312em var(--back-clouds-color),
+    3.625em -0.062em var(--clouds-color),
+    2.625em 0em var(--back-clouds-color),
+    4.5em -0.312em var(--clouds-color),
+    3.375em -0.437em var(--back-clouds-color),
+    4.625em -1.75em 0 0.437em var(--clouds-color),
+    4em -0.625em var(--back-clouds-color),
+    4.125em -2.125em 0 0.437em var(--back-clouds-color);
   -webkit-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
   -o-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
   transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
@@ -289,19 +302,19 @@ watch(darkMode, (selected) => {
 }
 
 .theme-switch__checkbox:checked
-+ .theme-switch__container
-.theme-switch__circle-container {
+  + .theme-switch__container
+  .theme-switch__circle-container {
   left: calc(
     100% - var(--circle-container-offset) - var(--circle-container-diameter)
   );
 }
 
 .theme-switch__checkbox:checked
-+ .theme-switch__container
-.theme-switch__circle-container:hover {
+  + .theme-switch__container
+  .theme-switch__circle-container:hover {
   left: calc(
     100% - var(--circle-container-offset) - var(--circle-container-diameter) -
-    0.187em
+      0.187em
   );
 }
 
@@ -316,14 +329,14 @@ watch(darkMode, (selected) => {
 }
 
 .theme-switch__checkbox:checked
-+ .theme-switch__container
-.theme-switch__clouds {
+  + .theme-switch__container
+  .theme-switch__clouds {
   bottom: -4.062em;
 }
 
 .theme-switch__checkbox:checked
-+ .theme-switch__container
-.theme-switch__stars-container {
+  + .theme-switch__container
+  .theme-switch__stars-container {
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);

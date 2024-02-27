@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Object3D from './Object3D.vue';
-import {TresCanvas} from "@tresjs/core"
+import { TresCanvas } from '@tresjs/core';
 
 const { objectFile, textureFile } = defineProps<{
   objectFile: string;

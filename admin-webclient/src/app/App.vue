@@ -3,7 +3,6 @@ import { computed, ref } from 'vue';
 import { RouterView } from 'vue-router';
 import ThemeSwitch from '../components/ThemeSwitch.vue';
 
-
 const darkMode = ref(false);
 
 const themeClass = computed(() => (darkMode.value ? 'macchiato' : 'latte'));
@@ -16,11 +15,11 @@ const themeClass = computed(() => (darkMode.value ? 'macchiato' : 'latte'));
   >
     <header class="w-screen">
       <nav class="flex px-8 py-3 bg-crust justify-between items-center">
-        <router-link :to="{name: 'home'}">
+        <router-link :to="{ name: 'home' }">
           <h1 class="text-text text-2xl">Talk With Me</h1>
         </router-link>
 
-        <ThemeSwitch v-model="darkMode"/>
+        <ThemeSwitch v-model="darkMode" />
       </nav>
     </header>
 

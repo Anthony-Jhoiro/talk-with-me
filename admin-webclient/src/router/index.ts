@@ -13,7 +13,7 @@ const router = createRouter({
       path: '/:id/talk',
       name: 'talk',
       component: () => import('../views/TalkView.vue'),
-      props: true
+      props: true,
     },
   ],
 });

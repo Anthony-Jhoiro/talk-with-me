@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
-
+import { TresCanvas } from '@tresjs/core';
 
 const gl = {
   clearColor: '#82DBC5',

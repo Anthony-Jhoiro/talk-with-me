@@ -7,9 +7,9 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'img-minecraft-bg': "url('/minecraft-bg.png')",
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export default config;
