@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from '@vue/runtime-core';
+import { onMounted } from 'vue';
 import {
   type GetCompanionMessagesBody,
   getCompanionWithMessages,
@@ -81,7 +81,11 @@ const waitingForResponse = computed(() => sendingMessage.value !== null);
     </p>
 
     <section id="discussion">
-      <Message v-for="message in messages" :message="message" />
+      <Message
+        v-for="message in messages"
+        :key="message.id"
+        :message="message"
+      />
     </section>
 
     <div class="flex justify-center my-5" v-if="waitingForResponse">

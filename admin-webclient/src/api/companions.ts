@@ -34,7 +34,7 @@ export const listCompanions: (
 export const getCompanionWithMessages: (
   companionId: string,
   opts?: RequestInit,
-) => Promise<GetCompanionMessagesBody> = (companionId, opts) =>
+) => Promise<GetCompanionMessagesBody> = (companionId) =>
   fetch(
     API_ENDPOINT + '/companions/' + companionId + '?projection=messages',
   ).then((r) => r.json());
@@ -42,7 +42,7 @@ export const getCompanionWithMessages: (
 export const sendMessage: (
   companionId: string,
   message: string,
-) => Promise<any> = (companionId: string, message: string) =>
+) => Promise<unknown> = (companionId: string, message: string) =>
   fetch(API_ENDPOINT + '/companions/' + companionId + '/talk', {
     method: 'POST',
     headers: {

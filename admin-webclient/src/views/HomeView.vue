@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/vue/24/solid';
-import { onMounted } from '@vue/runtime-core';
+import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { type Companion, listCompanions } from '../api/companions';
 import LoadingIndicator from '../components/LoadingIndicator.vue';
@@ -32,7 +32,7 @@ onMounted(() => {
     v-if="companions"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
   >
-    <div class="h-[500px]" v-for="companion in companions">
+    <div class="h-[500px]" v-for="companion in companions" :key="companion.id">
       <CompanionCard :companion="companion">
         <template #action-row>
           <div class="flex justify-end gap-3">

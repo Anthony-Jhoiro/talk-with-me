@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from '@vue/runtime-core';
+import { onMounted, watch } from 'vue';
 
 type Theme = 'light' | 'dark';
 
