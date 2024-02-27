@@ -2504,6 +2504,18 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
+autoprefixer@^10.4.17:
+  version "10.4.17"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.17.tgz#35cd5695cbbe82f536a50fa025d561b01fdec8be"
+  integrity sha512-/cpVNRLSfhOtcGflT13P2794gVSgmPgTR+erw5ifnMLZb0UnSlkK4tquLmkd3BhA+nLo5tX8Cu0upUsGKvKbmg==
+  dependencies:
+    browserslist "^4.22.2"
+    caniuse-lite "^1.0.30001578"
+    fraction.js "^4.3.7"
+    normalize-range "^0.1.2"
+    picocolors "^1.0.0"
+    postcss-value-parser "^4.2.0"
+
 axios@^1.6.0:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
@@ -2708,6 +2720,11 @@ camera-controls@^2.7.4:
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-2.8.3.tgz#54c296d21564dede84e56ffd6b75b3daa3c76e90"
   integrity sha512-zFjqUR6onLkG+z1A6vAWfzovxZxWVSvp6e5t3lfZgfgPZtX3n74aykNAUaoRbq8Y3tOxadHkDjbfGDOP9hFf2w==
+
+caniuse-lite@^1.0.30001578:
+  version "1.0.30001591"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001591.tgz#16745e50263edc9f395895a7cd468b9f3767cf33"
+  integrity sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==
 
 caniuse-lite@^1.0.30001587:
   version "1.0.30001589"
@@ -3587,6 +3604,11 @@ form-data@^4.0.0:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
+
+fraction.js@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
+  integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
 fs-constants@^1.0.0:
   version "1.0.0"
@@ -4560,6 +4582,11 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+normalize-range@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
+  integrity sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==
+
 npm-package-arg@11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/npm-package-arg/-/npm-package-arg-11.0.1.tgz#f208b0022c29240a1c532a449bdde3f0a4708ebc"
@@ -4903,7 +4930,7 @@ postcss-selector-parser@^6.0.11, postcss-selector-parser@^6.0.15:
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
-postcss-value-parser@^4.0.0:
+postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
