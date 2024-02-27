@@ -1,6 +1,6 @@
 mistral-ia:
-  api-key: "xxxxxxxxxxxxxxxxxxx"
+  api-key: 'xxxxxxxxxxxxxxxxxxx'
 
 spring:
   profiles:
-    active: "sqlite,langchain"
+    active: 'sqlite,langchain'
