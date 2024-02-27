@@ -45,3 +45,6 @@ Thumbs.db
 .nuxt
 .nitro
 .cache
+
+# Tmp files
+*.db
