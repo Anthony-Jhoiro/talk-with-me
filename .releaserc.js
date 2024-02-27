@@ -49,20 +49,22 @@ module.exports = {
       },
     ],
     [
-      '@semantic-release/git',
-      {
-        assets: ['CHANGELOG.md', 'package.json', 'README.md'],
-        message:
-          ':bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
-      },
-    ],
-    '@semantic-release/github',
-    [
       '@semantic-release/exec',
       {
+        prepareCmd: "nx run-many -t set-version --args=\"--version=${nextRelease.version}\"",
         publishCmd:
-          './publish.sh ${nextRelease.version} ${branch.name} ${commits.length} ${Date.now()}',
+          'nx run-many -t release',
       },
     ],
+    [
+      '@semantic-release/git',
+      {
+        assets: ['CHANGELOG.md', 'package.json', 'README.md', 'pom.xml'],
+        message:
+          ':bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+      }
+    ],
+    '@semantic-release/github',
+
   ],
 };
