@@ -10,7 +10,7 @@
   </parent>
   <groupId>fr.anthonyquere.talkwithme</groupId>
   <artifactId>core</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <name>core</name>
   <description>Demo project for Spring Boot</description>
 
