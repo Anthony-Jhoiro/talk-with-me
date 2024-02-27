@@ -72,6 +72,8 @@ module.exports = {
           '**/README.md',
           '**/pom.xml',
           '!node_modules',
+          '!dist',
+          '!.nx',
         ],
         message:
           ':bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
