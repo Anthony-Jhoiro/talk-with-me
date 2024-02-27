@@ -9,7 +9,7 @@
       "options": {
         "root": "core"
       },
-      "dependsOn": ["^install"],
+      "dependsOn": ["^install", "copy-front"],
       "outputs": ["{workspaceRoot}/core/target"]
     },
     "install": {
@@ -53,7 +53,8 @@
       "options": {
         "root": "core"
       },
-      "outputs": ["{workspaceRoot}/core/target"]
+      "outputs": ["{workspaceRoot}/core/target"],
+      "dependsOn": ["copy-front"]
     },
     "build-info": {
       "executor": "@nxrocks/nx-spring-boot:build-info",
@@ -66,7 +67,19 @@
       "options": {
         "command": "echo ### To implement ###"
       }
+    },
+    "copy-front": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "mkdir -p ./core/src/main/resources/static",
+          "cp -r ./dist/admin-webclient/* ./core/src/main/resources/static"
+        ],
+        "parallel": false
+      },
+      "dependsOn": ["^build"]
     }
   },
-  "tags": []
+  "tags": [],
+  "implicitDependencies": ["admin-webclient"]
 }

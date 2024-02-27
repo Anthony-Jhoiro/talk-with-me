@@ -36,3 +36,4 @@ build/
 *.db
 .env
 target_test
+src/main/resources/static
