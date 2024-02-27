@@ -60,6 +60,12 @@
       "options": {
         "root": "core"
       }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo ### To implement ###"
+      }
     }
   },
   "tags": []

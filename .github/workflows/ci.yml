@@ -26,13 +26,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: "yarn"
+          cache: 'yarn'
 
       - uses: actions/setup-java@v4
         with:
-          distribution: "temurin"
-          java-version: "21"
-          cache: "maven"
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
 
       - run: yarn
       - uses: nrwl/nx-set-shas@v4
