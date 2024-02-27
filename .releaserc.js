@@ -35,43 +35,48 @@ module.exports = {
             ':pencil2:',
             ':bento:',
             ':green_apple:',
-            ':green_heart:'
-          ]
+            ':green_heart:',
+          ],
         },
         releaseNotes: {
           template,
           helpers: {
-            datetime: function(format = 'UTC:yyyy-mm-dd') {
+            datetime: function (format = 'UTC:yyyy-mm-dd') {
               return dateFormat(new Date(), format);
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     ],
     [
       '@semantic-release/exec',
       {
-        prepareCmd: 'nx run-many -t set-version --args="--version=${nextRelease.version}"',
-        publishCmd:
-          'nx run-many -t release'
-      }
+        prepareCmd:
+          'nx run-many -t set-version --args="--version=${nextRelease.version}"',
+        publishCmd: 'nx run-many -t release',
+      },
     ],
     [
       '@semantic-release/npm',
       {
-        npmPublish: false
-      }
+        npmPublish: false,
+      },
     ],
-    "@semantic-release/changelog",
+    '@semantic-release/changelog',
     [
       '@semantic-release/git',
       {
-        assets: ['**/CHANGELOG.md', '**/package.json', '**/README.md', '**/pom.xml'],
+        assets: [
+          '**/CHANGELOG.md',
+          '**/package.json',
+          '**/README.md',
+          '**/pom.xml',
+          '!node_modules',
+        ],
         message:
-          ':bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
-      }
+          ':bookmark: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+      },
     ],
-    '@semantic-release/github'
-
-  ]
+    '@semantic-release/github',
+  ],
 };
