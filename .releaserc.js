@@ -17,7 +17,7 @@ module.exports = {
       {
         releaseRules: {
           major: [':boom:'],
-          minor: [':sparkles:'],
+          minor: [':sparkles:', ':tada:'],
           patch: [
             ':bug:',
             ':ambulance:',
