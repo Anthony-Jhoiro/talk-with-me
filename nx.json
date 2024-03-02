@@ -11,7 +11,7 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudAccessToken": "MDFhMmI2MGQtODQwYS00NGU3LWI4ODAtNWYyY2FiNDM3MDQ4fHJlYWQtd3JpdGU=",
+  "nxCloudAccessToken": "Y2Q0MzdiNGEtYmNmMy00NTg4LThjNjAtNmQ2MGEzMDJiZmRhfHJlYWQ=",
   "plugins": [
     {
       "plugin": "@nx/vite/plugin",
