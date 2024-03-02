@@ -1,1 +1,2 @@
 rootProject.name = 'talk-with-me'
+include(':core')

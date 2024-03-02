@@ -1,0 +1,54 @@
+import groovy.json.JsonSlurper
+
+
+plugins {
+	id 'java'
+	alias libs.plugins.springframework.boot
+	alias libs.plugins.spring.dependency.management
+}
+
+def packageSlurper = new JsonSlurper()
+def packageJson = packageSlurper.parse file('../package.json')
+
+group = 'fr.anthonyquere.talkwithme'
+version = packageJson['version']
+
+java {
+  sourceCompatibility = libs.versions.java.get()
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+  // Starters
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
+  // Dependencies
+  // Dependencies / Database
+  implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
+  implementation 'org.hibernate.orm:hibernate-community-dialects'
+
+  // Dependencies / AI
+  implementation 'dev.langchain4j:langchain4j:0.27.1'
+  implementation 'dev.langchain4j:langchain4j-mistral-ai:0.27.1'
+
+  // Dev utils
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+
+  testCompileOnly 'org.projectlombok:lombok'
+  testAnnotationProcessor 'org.projectlombok:lombok'
+
+
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
