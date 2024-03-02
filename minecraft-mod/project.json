@@ -17,6 +17,12 @@
         "task": "run"
       }
     },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo ### To implement ###"
+      }
+    },
     "test": {
       "executor": "@jnxplus/nx-gradle:run-task",
       "options": {
