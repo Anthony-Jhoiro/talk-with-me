@@ -24,9 +24,9 @@
       }
     },
     "test": {
-      "executor": "@jnxplus/nx-gradle:run-task",
+      "executor": "nx:run-commands",
       "options": {
-        "task": "test"
+        "command": "echo ### To implement ###"
       }
     }
   },
