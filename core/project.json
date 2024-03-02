@@ -1,65 +1,35 @@
 {
   "name": "core",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "core/src",
   "projectType": "application",
+  "sourceRoot": "./core/src",
   "targets": {
     "build": {
-      "executor": "@nxrocks/nx-spring-boot:build",
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "outputs": ["{projectRoot}/build"],
       "options": {
-        "root": "core"
+        "task": "bootJar"
       },
-      "dependsOn": ["^install", "copy-front"],
-      "outputs": ["{workspaceRoot}/core/target"]
-    },
-    "install": {
-      "executor": "@nxrocks/nx-spring-boot:install",
-      "options": {
-        "root": "core"
-      },
-      "dependsOn": ["^install"],
-      "outputs": ["{workspaceRoot}/core/target"]
-    },
-    "test": {
-      "executor": "@nxrocks/nx-spring-boot:test",
-      "options": {
-        "root": "core",
-        "args": ["-DbuildDirectory=\"target_test\""]
-      },
-      "outputs": ["{workspaceRoot}/core/target_test"]
-    },
-    "clean": {
-      "executor": "@nxrocks/nx-spring-boot:clean",
-      "options": {
-        "root": "core"
-      }
-    },
-    "run": {
-      "executor": "@nxrocks/nx-spring-boot:run",
-      "options": {
-        "root": "core"
-      },
-      "dependsOn": ["^install"]
-    },
-    "serve": {
-      "executor": "@nxrocks/nx-spring-boot:serve",
-      "options": {
-        "root": "core"
-      },
-      "dependsOn": ["^install"]
-    },
-    "build-image": {
-      "executor": "@nxrocks/nx-spring-boot:build-image",
-      "options": {
-        "root": "core"
-      },
-      "outputs": ["{workspaceRoot}/core/target"],
       "dependsOn": ["copy-front"]
     },
-    "build-info": {
-      "executor": "@nxrocks/nx-spring-boot:build-info",
+    "build-image": {
+      "executor": "@jnxplus/nx-gradle:run-task",
       "options": {
-        "root": "core"
+        "task": "bootBuildImage"
+      },
+      "dependsOn": ["copy-front"]
+    },
+    "serve": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "bootRun",
+        "keepItRunning": true
+      }
+    },
+    "test": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "test"
       }
     },
     "lint": {

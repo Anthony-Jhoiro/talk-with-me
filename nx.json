@@ -13,7 +13,6 @@
   },
   "nxCloudAccessToken": "MDFhMmI2MGQtODQwYS00NGU3LWI4ODAtNWYyY2FiNDM3MDQ4fHJlYWQtd3JpdGU=",
   "plugins": [
-    "@nxrocks/nx-spring-boot",
     {
       "plugin": "@nx/vite/plugin",
       "options": {
@@ -28,6 +27,12 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@jnxplus/nx-gradle",
+      "options": {
+        "gradleRootDirectory": "."
       }
     }
   ],

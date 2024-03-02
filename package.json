@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@catppuccin/tailwindcss": "^0.1.6",
+    "@jnxplus/nx-gradle": "^0.40.0",
     "@nx/eslint": "18.0.4",
     "@nx/eslint-plugin": "18.0.4",
     "@nx/js": "18.0.4",
@@ -18,7 +19,6 @@
     "@nx/vue": "18.0.4",
     "@nx/web": "18.0.4",
     "@nx/workspace": "18.0.4",
-    "@nxrocks/nx-spring-boot": "^9.3.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -51,6 +51,7 @@
     "vitest": "^1.0.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
-    "vue-tsc": "^1.8.8"
+    "vue-tsc": "^1.8.8",
+    "prettier-plugin-java": "^2.3.1"
   }
 }
