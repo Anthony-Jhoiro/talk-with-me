@@ -1,0 +1,39 @@
+{
+  "name": "minecraft-mod",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "./minecraft-mod/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo ### To implement ###"
+      }
+    },
+    "serve-client": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "runClient"
+      }
+    },
+    "serve-server": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "runServer"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo ### To implement ###"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo ### To implement ###"
+      }
+    }
+  },
+  "tags": []
+}
