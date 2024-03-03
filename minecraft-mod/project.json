@@ -5,16 +5,21 @@
   "sourceRoot": "./minecraft-mod/src",
   "targets": {
     "build": {
-      "executor": "@jnxplus/nx-gradle:run-task",
-      "outputs": ["{projectRoot}/build"],
+      "executor": "nx:run-commands",
       "options": {
-        "task": "build"
+        "command": "echo ### To implement ###"
       }
     },
-    "serve": {
+    "serve-client": {
       "executor": "@jnxplus/nx-gradle:run-task",
       "options": {
-        "task": "run"
+        "task": "runClient"
+      }
+    },
+    "serve-server": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "runServer"
       }
     },
     "lint": {
