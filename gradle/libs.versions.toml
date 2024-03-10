@@ -1,6 +1,6 @@
 [versions]
 spring-boot = "3.2.0"
-java = "21"
+java = "17"
 
 [libraries]
 

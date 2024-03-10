@@ -10,6 +10,24 @@
         "command": "echo ### To implement ###"
       }
     },
+    "build-jar": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "build"
+      }
+    },
+    "move-jar": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cp ./build/libs/*.jar ./tmp/mods",
+          "rm -f ./tmp/mods/*-slim.jar"
+        ],
+        "parallel": false,
+        "cwd": "./minecraft-mod"
+      },
+      "dependsOn": ["build-jar"]
+    },
     "serve-client": {
       "executor": "@jnxplus/nx-gradle:run-task",
       "options": {
@@ -21,6 +39,14 @@
       "options": {
         "task": "runServer"
       }
+    },
+    "docker-server": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose restart || docker compose up -d",
+        "cwd": "./minecraft-mod"
+      },
+      "dependsOn": ["move-jar"]
     },
     "lint": {
       "executor": "nx:run-commands",
