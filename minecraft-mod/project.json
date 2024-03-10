@@ -40,8 +40,8 @@
         "task": "runServer"
       }
     },
-    "docker-server":  {
-      "executor":  "nx:run-commands",
+    "docker-server": {
+      "executor": "nx:run-commands",
       "options": {
         "command": "docker compose restart || docker compose up -d",
         "cwd": "./minecraft-mod"
