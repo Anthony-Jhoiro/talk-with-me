@@ -2,9 +2,9 @@ import groovy.json.JsonSlurper
 
 
 plugins {
-	id 'java'
-	alias libs.plugins.springframework.boot
-	alias libs.plugins.spring.dependency.management
+  id 'java'
+  alias libs.plugins.springframework.boot
+  alias libs.plugins.spring.dependency.management
 }
 
 def packageSlurper = new JsonSlurper()
@@ -18,7 +18,7 @@ java {
 }
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
