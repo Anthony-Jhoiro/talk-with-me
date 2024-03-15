@@ -1,40 +1,36 @@
 package fr.anthonyquere.talkwithme.minecraftmod.neighbor;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 import fr.anthonyquere.talkwithme.domains.CoreAPI;
 import fr.anthonyquere.talkwithme.domains.CoreAPIClientFactory;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.goals.SleepInBedGoal;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.NeighborHouseMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.sensing.Sensor;
-import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,7 +59,7 @@ public abstract class Neighbor {
 
   public abstract ResourceLocation geTextureResourceLocation();
 
-  public abstract LayerDefinition createBodyLayer();
+  public abstract List<Block> getRequiredBlocks();
 
   public ModelLayerLocation getModelLayerLocation() {
     return new ModelLayerLocation(new ResourceLocation(MODID, this.id), "main");
@@ -94,10 +90,7 @@ public abstract class Neighbor {
 
   public class Entity extends AgeableMob {
     private final String id;
-
-    private static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(MemoryModuleType.HOME, MemoryModuleType.JOB_SITE, MemoryModuleType.POTENTIAL_JOB_SITE, MemoryModuleType.MEETING_POINT, MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.VISIBLE_VILLAGER_BABIES, MemoryModuleType.NEAREST_PLAYERS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, MemoryModuleType.ITEM_PICKUP_COOLDOWN_TICKS, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.BREED_TARGET, MemoryModuleType.PATH, MemoryModuleType.DOORS_TO_CLOSE, MemoryModuleType.NEAREST_BED, MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.NEAREST_HOSTILE, MemoryModuleType.SECONDARY_JOB_SITE, MemoryModuleType.HIDING_PLACE, MemoryModuleType.HEARD_BELL_TIME, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.LAST_SLEPT, MemoryModuleType.LAST_WOKEN, MemoryModuleType.LAST_WORKED_AT_POI, MemoryModuleType.GOLEM_DETECTED_RECENTLY);
-    private static final ImmutableList<SensorType<? extends Sensor<? super Entity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_BED);
-
+    private int lastInteractedTick;
 
     public Entity(String id, EntityType<? extends AgeableMob> entityType, Level world) {
       super(entityType, world);
@@ -141,10 +134,6 @@ public abstract class Neighbor {
       this.goalSelector.addGoal(++i, new LeapAtTargetGoal(this, 0.5F));
     }
 
-    @Override
-    protected Brain.@NotNull Provider<Entity> brainProvider() {
-      return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
-    }
 
     public List<Player> getNearbyPlayers() {
       return this.level().getEntities(this, new AABB(
@@ -160,22 +149,7 @@ public abstract class Neighbor {
         .filter(Objects::nonNull).toList();
     }
 
-
-    @Override
-    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-      var dbg = "Player [%s] interacted with [%s] with [%s] in [%s]".formatted(player.getName().getString(), name, hand.name(), FMLEnvironment.dist.name());
-
-      var nearestBed = this.getBrain().getMemory(MemoryModuleType.NEAREST_BED);
-
-      LOGGER.debug("Nearest bed: {}", nearestBed.map(Vec3i::toString).orElse("Unknown"));
-      LOGGER.debug(dbg);
-      player.swing(hand);
-      super.mobInteract(player, hand);
-
-
-      if (!hand.equals(InteractionHand.MAIN_HAND)) {
-        return InteractionResult.PASS;
-      }
+    private @NotNull InteractionResult chat(@NotNull Player player) {
 
       if (player.level().isClientSide() && Minecraft.getInstance().getCurrentServer() == null) {
         player.displayClientMessage(
@@ -198,8 +172,43 @@ public abstract class Neighbor {
           false
         );
       }
-
       return InteractionResult.SUCCESS;
+
+    }
+
+    private @NotNull InteractionResult openMenu(@NotNull Player player) {
+
+      if (!this.level().isClientSide()) {
+        player.openMenu(//getRequiredBlocks
+          new SimpleMenuProvider((int containerId, Inventory inventory, Player p) -> new NeighborHouseMenu(containerId, inventory, p, getRequiredBlocks()), this.getDisplayName())
+        );
+        return InteractionResult.SUCCESS;
+      }
+
+      return InteractionResult.CONSUME;
+    }
+
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+      var dbg = "Player [%s] interacted with [%s] with [%s] in [%s]".formatted(player.getName().getString(), name, hand.name(), this.level().isClientSide() ? "client" : "server");
+      LOGGER.debug(dbg);
+
+      player.swing(hand);
+      super.mobInteract(player, hand);
+
+
+      if (!hand.equals(InteractionHand.MAIN_HAND)) {
+        return InteractionResult.PASS;
+      }
+
+      if (player.isCrouching()) {
+        return openMenu(player);
+      }
+      return openMenu(player);
+
+
+//      return chat(player);
     }
 
     @Nullable
