@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "voisins:block/blueprint_block",
+    "east": "voisins:block/blueprint_block",
+    "north": "voisins:block/blueprint_door",
+    "south": "voisins:block/blueprint_block",
+    "up": "voisins:block/blueprint_block",
+    "west": "voisins:block/blueprint_block"
+  }
+}

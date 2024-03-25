@@ -1,4 +1,4 @@
-package fr.anthonyquere.talkwithme.minecraftmod;
+package fr.anthonyquere.talkwithme.minecraftmod.registries;
 
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.Neighbor;
 import fr.anthonyquere.talkwithme.minecraftmod.vulpis.VulpisModel;
@@ -16,19 +16,19 @@ public class NeighborModelRegistry {
 
     public NeighborModelRegistry() {
         renderers = Map.of(
-                "ilia_the_cat", new ModelSupplier(VulpisModel::new, VulpisModel::createBodyLayer)
+                "vulpis", new ModelSupplier(VulpisModel::new, VulpisModel::createBodyLayer)
         );
     }
 
-    Function<ModelPart, EntityModel<Neighbor.Entity>> getModelBuilder(String id) {
+    public Function<ModelPart, EntityModel<Neighbor.Entity>> getModelBuilder(String id) {
         return renderers.get(id).modelBuilder;
     }
 
-    Supplier<LayerDefinition> getLayerBuilder(String id) {
+    public Supplier<LayerDefinition> getLayerBuilder(String id) {
         return renderers.get(id).layerDefinitionBuilder;
     }
 
-    record ModelSupplier(
+    public record ModelSupplier(
             Function<ModelPart, EntityModel<Neighbor.Entity>> modelBuilder,
             Supplier<LayerDefinition> layerDefinitionBuilder
     ) {
