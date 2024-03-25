@@ -1,7 +1,7 @@
-package fr.anthonyquere.talkwithme.minecraftmod;
+package fr.anthonyquere.talkwithme.minecraftmod.registries;
 
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.Neighbor;
-import fr.anthonyquere.talkwithme.minecraftmod.neighbor.implementations.IliaTheCat;
+import fr.anthonyquere.talkwithme.minecraftmod.vulpis.Vulpis;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ public class NeighborRegistry {
 
     public NeighborRegistry() {
         neighbors = List.of(
-                new IliaTheCat()
+                new Vulpis()
         );
     }
 
-    List<Neighbor> getNeighbors() {
+    public List<Neighbor> getNeighbors() {
         return neighbors;
     }
 }

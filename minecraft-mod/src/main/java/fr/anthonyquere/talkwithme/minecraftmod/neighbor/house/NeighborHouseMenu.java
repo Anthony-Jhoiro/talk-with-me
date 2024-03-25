@@ -18,12 +18,13 @@ import java.util.List;
 public class NeighborHouseMenu extends ItemCombinerMenu {
 
   private final List<Block> requiredBlocks;
+  private final Block resultBlock;
 
   private static final List<Integer> blockPositions = List.of(61, 79, 97);
   private static final Integer BLOCKS_Y_OFFSET = 44;
 
 
-  public NeighborHouseMenu(int containerId, Inventory inventory, Player player, List<Block> requiredBlocks) {
+  public NeighborHouseMenu(int containerId, Inventory inventory, Player player, List<Block> requiredBlocks, Block resultBlock) {
     super(
       MenuRegistry.NeighborHouseMenu.get(),
       containerId,
@@ -32,9 +33,10 @@ public class NeighborHouseMenu extends ItemCombinerMenu {
     );
 
     this.requiredBlocks = requiredBlocks;
+    this.resultBlock = resultBlock;
   }
 
-  public NeighborHouseMenu(int containerId, Inventory inventory, FriendlyByteBuf _ignored) {
+  public NeighborHouseMenu(int containerId, Inventory inventory, FriendlyByteBuf ignored) {
 
     super(MenuRegistry.NeighborHouseMenu.get(),
       containerId,
@@ -42,6 +44,7 @@ public class NeighborHouseMenu extends ItemCombinerMenu {
       ContainerLevelAccess.create(inventory.player.level(), inventory.player.blockPosition()));
 
     requiredBlocks = List.of(Blocks.AIR, Blocks.AIR, Blocks.AIR);
+    resultBlock = Blocks.AIR;
   }
 
   @Override
@@ -79,7 +82,7 @@ public class NeighborHouseMenu extends ItemCombinerMenu {
         return;
       }
     }
-    var stack = new ItemStack(Blocks.CHERRY_FENCE);
+    var stack = new ItemStack(resultBlock);
     stack.setCount(1);
     this.resultSlots.setItem(1, stack);
   }

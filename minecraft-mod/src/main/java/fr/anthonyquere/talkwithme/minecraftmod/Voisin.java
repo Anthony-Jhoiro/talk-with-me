@@ -1,21 +1,25 @@
 package fr.anthonyquere.talkwithme.minecraftmod;
 
-import com.mojang.blaze3d.platform.ScreenManager;
 import com.mojang.logging.LogUtils;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.Neighbor;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.NeighborRenderer;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.HouseBlueprintBlockModelProvider;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.HouseBlueprintBlockStateProvider;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.NeighborHouseMenuScreen;
+import fr.anthonyquere.talkwithme.minecraftmod.registries.BlocksRegistry;
 import fr.anthonyquere.talkwithme.minecraftmod.registries.MenuRegistry;
-import fr.anthonyquere.talkwithme.minecraftmod.vulpis.VulpisModel;
+import fr.anthonyquere.talkwithme.minecraftmod.registries.NeighborModelRegistry;
+import fr.anthonyquere.talkwithme.minecraftmod.registries.NeighborRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -39,8 +44,15 @@ public class Voisin {
   public static final NeighborRegistry neighborRegistry = new NeighborRegistry();
   public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+
   // Directly reference a slf4j logger
   private static final Logger LOGGER = LogUtils.getLogger();
+
+  private static RegistryObject<Item> block(RegistryObject<Block> b) {
+    return ITEMS.register(b.getId().getPath(), () ->
+      new BlockItem(b.get(), new Item.Properties())
+    );
+  }
 
   public Voisin() {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -51,9 +63,10 @@ public class Voisin {
         var registeredEntity = ENTITIES.register(neighbor.getId(), neighbor::getEntityType);
         ITEMS.register(neighbor.getSpawnEggId(), () -> Neighbor.getSpawnEgg(registeredEntity));
       });
+
     LOGGER.info("STOP REGISTERING ENTITIES");
 
-
+    BlocksRegistry.getInstance(MODID).registerRegistries(modEventBus);
     MenuRegistry.REGISTRY.register(modEventBus);
 
     ENTITIES.register(modEventBus);
@@ -129,32 +142,46 @@ public class Voisin {
             neighborModelRegistry.getLayerBuilder(neighbor.getId())
           );
         });
-
-      event.registerLayerDefinition(new ModelLayerLocation(
-        new ResourceLocation(MODID, "vulpis"), "main"), VulpisModel::createBodyLayer);
       LOGGER.info("STOP REGISTERING LAYERS");
 
     }
-  }
 
-  @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-  public static class ModEventBusEvents {
-    @SubscribeEvent
-    public static void registerAttributes(EntityAttributeCreationEvent event) {
-      LOGGER.info("START REGISTERING ENTITIES ATTRIBUTES");
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModEventBusEvents {
+      @SubscribeEvent
+      public static void registerAttributes(EntityAttributeCreationEvent event) {
+        LOGGER.info("START REGISTERING ENTITIES ATTRIBUTES");
 
-      neighborRegistry.getNeighbors()
-        .forEach(
-          neighbor -> {
-            LOGGER.debug("Register attributes for {}", neighbor.getId());
-            event.put(
-              neighbor.getEntityType(),
-              Neighbor.Entity.getAttributeSupplier()
-            );
-          }
-        );
+        neighborRegistry.getNeighbors()
+          .forEach(
+            neighbor -> {
+              LOGGER.debug("Register attributes for {}", neighbor.getId());
+              event.put(
+                neighbor.getEntityType(),
+                Neighbor.Entity.getAttributeSupplier()
+              );
+            }
+          );
 
-      LOGGER.info("STOP REGISTERING ENTITIES ATTRIBUTES");
+        LOGGER.info("STOP REGISTERING ENTITIES ATTRIBUTES");
+      }
+
+      @SubscribeEvent
+      public static void gatherData(GatherDataEvent event) {
+        var generator = event.getGenerator();
+        var packOutput = generator.getPackOutput();
+        var existingFileHelper = event.getExistingFileHelper();
+
+        // Register model
+        generator.addProvider(event.includeClient(), new HouseBlueprintBlockModelProvider(packOutput, existingFileHelper));
+
+        neighborRegistry.getNeighbors()
+          .forEach(neighbor ->
+            // Register block state
+            generator.addProvider(event.includeClient(), new HouseBlueprintBlockStateProvider(packOutput, existingFileHelper, neighbor))
+          );
+
+      }
     }
   }
 }

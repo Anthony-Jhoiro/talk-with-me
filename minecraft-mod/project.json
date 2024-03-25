@@ -40,6 +40,12 @@
         "task": "runServer"
       }
     },
+    "generate-assets": {
+      "executor": "@jnxplus/nx-gradle:run-task",
+      "options": {
+        "task": "runData"
+      }
+    },
     "docker-server": {
       "executor": "nx:run-commands",
       "options": {

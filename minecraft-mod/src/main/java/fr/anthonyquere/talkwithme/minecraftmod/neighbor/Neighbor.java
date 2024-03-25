@@ -4,7 +4,9 @@ import com.mojang.logging.LogUtils;
 import fr.anthonyquere.talkwithme.domains.CoreAPI;
 import fr.anthonyquere.talkwithme.domains.CoreAPIClientFactory;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.goals.SleepInBedGoal;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.HouseBlueprintBlock;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.NeighborHouseMenu;
+import fr.anthonyquere.talkwithme.minecraftmod.registries.BlocksRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.network.chat.Component;
@@ -50,16 +52,16 @@ public abstract class Neighbor {
   private EntityType<Entity> entityType;
 
 
-  public Neighbor(String name) {
+  protected Neighbor(String name) {
     this.name = name;
     this.id = name.toLowerCase().replaceAll("[^a-z]", "_");
   }
 
-  public abstract String getMessage() throws Exception;
-
   public abstract ResourceLocation geTextureResourceLocation();
 
-  public abstract List<Block> getRequiredBlocks();
+  public abstract ResourceLocation getHouseStructure();
+
+  protected abstract List<Block> getRequiredBlocks();
 
   public ModelLayerLocation getModelLayerLocation() {
     return new ModelLayerLocation(new ResourceLocation(MODID, this.id), "main");
@@ -67,6 +69,10 @@ public abstract class Neighbor {
 
   public final String getSpawnEggId() {
     return this.id + "_spawn_egg";
+  }
+
+  public final String getHouseBlueprintBlockId() {
+    return this.id + "_house_blueprint";
   }
 
   public static ForgeSpawnEggItem getSpawnEgg(RegistryObject<EntityType<Entity>> registryObject) {
@@ -79,7 +85,7 @@ public abstract class Neighbor {
 
   public EntityType<Entity> getEntityType() {
     if (entityType == null) {
-      entityType = EntityType.Builder.of((EntityType<Entity> e, Level l) -> new Entity(getId(), e, l), MobCategory.MONSTER)
+      entityType = EntityType.Builder.of(Entity::new, MobCategory.MONSTER)
         .sized(0.6F, 0.7F)
         .clientTrackingRange(8)
         .build(this.id);
@@ -88,13 +94,25 @@ public abstract class Neighbor {
     return entityType;
   }
 
-  public class Entity extends AgeableMob {
-    private final String id;
-    private int lastInteractedTick;
+  /**
+   * /!\ Call only when populating registry
+   */
+  public HouseBlock getHouseBlock() {
+    return new HouseBlock();
+  }
 
-    public Entity(String id, EntityType<? extends AgeableMob> entityType, Level world) {
+
+  public class HouseBlock extends HouseBlueprintBlock {
+    @Override
+    protected ResourceLocation getHouseResourceLocation() {
+      return getHouseStructure();
+    }
+  }
+
+  public class Entity extends AgeableMob {
+
+    public Entity(EntityType<? extends AgeableMob> entityType, Level world) {
       super(entityType, world);
-      this.id = id;
       this.setCustomName(Component.literal(name));
       this.setSpeed(0.6F);
     }
@@ -106,7 +124,7 @@ public abstract class Neighbor {
       this.spawnAtLocation(new ItemStack(
         ITEMS.getEntries()
           .stream()
-          .filter(e -> e.getId().getPath().contains(this.id + "_spawn_egg"))
+          .filter(e -> e.getId().getPath().contains(getSpawnEggId()))
           .findFirst()
           .map(RegistryObject::get)
           .orElse(Items.SWEET_BERRIES)));
@@ -161,7 +179,7 @@ public abstract class Neighbor {
       if (!player.level().isClientSide()) {
         String message;
         try {
-          message = new CoreAPIClientFactory().getClient().talkWithCompanion(new CoreAPI.TalkRequestPayload("Hello! How are you today?"), "vulpis").getMessage();
+          message = new CoreAPIClientFactory().getClient().talkWithCompanion(new CoreAPI.TalkRequestPayload("Hello! How are you today?"), Neighbor.this.getId()).getMessage();
         } catch (Exception e) {
           LOGGER.error("Fail to communicate with companion", e);
           message = "Oh... Something failed...";
@@ -180,7 +198,13 @@ public abstract class Neighbor {
 
       if (!this.level().isClientSide()) {
         player.openMenu(//getRequiredBlocks
-          new SimpleMenuProvider((int containerId, Inventory inventory, Player p) -> new NeighborHouseMenu(containerId, inventory, p, getRequiredBlocks()), this.getDisplayName())
+          new SimpleMenuProvider((int containerId, Inventory inventory, Player p) -> new NeighborHouseMenu(
+            containerId,
+            inventory,
+            p,
+            getRequiredBlocks(),
+            BlocksRegistry.getInstance(MODID).get(getHouseBlueprintBlockId())
+          ), this.getDisplayName())
         );
         return InteractionResult.SUCCESS;
       }
@@ -205,15 +229,12 @@ public abstract class Neighbor {
       if (player.isCrouching()) {
         return openMenu(player);
       }
-      return openMenu(player);
-
-
-//      return chat(player);
+      return chat(player);
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob) {
       return null;
     }
   }
