@@ -1,3 +1,9 @@
+# [v1.3.0](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.2.0...v1.3.0) (2024-03-25)
+
+## ✨ New Features
+
+- [`07599be`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/07599be)  Add menu (#9) (Issues: [`#9`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/9))
+
 # [v1.2.0](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.1.0...v1.2.0) (2024-03-10)
 
 ## ✨ New Features
