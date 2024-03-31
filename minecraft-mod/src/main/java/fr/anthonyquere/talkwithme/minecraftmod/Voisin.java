@@ -13,6 +13,8 @@ import fr.anthonyquere.talkwithme.minecraftmod.registries.NeighborModelRegistry;
 import fr.anthonyquere.talkwithme.minecraftmod.registries.NeighborRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.MessageArgument;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +23,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -94,6 +97,30 @@ public class Voisin {
   public void onServerStarting(ServerStartingEvent event) {
     // Do something when the server starts
     LOGGER.info("Starting server");
+  }
+
+  @SubscribeEvent
+  public void registerCommandsEvent(RegisterCommandsEvent event) {
+
+    LOGGER.info("START REGISTERING COMMANDS");
+
+
+    var talkCommand = Commands.literal("talk");
+
+    neighborRegistry.getNeighbors()
+      .forEach(neighbor -> {
+        LOGGER.info("Registering command Talk for neighbor {}", neighbor.getName());
+        talkCommand.then(Commands.literal(neighbor.getId())
+            .then(Commands.argument("toto", MessageArgument.message())
+          .executes(command -> {
+            LOGGER.info(neighbor.getName() + ": " + command.getInput());
+            return 1;
+          })));
+      });
+    event.getDispatcher().register(talkCommand);
+
+
+    LOGGER.info("STOP REGISTERING COMMANDS");
   }
 
   @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

@@ -60,6 +60,10 @@ public abstract class Neighbor {
     this.id = name.toLowerCase().replaceAll("[^a-z]", "_");
   }
 
+  public String getName() {
+    return this.name;
+  }
+
   public abstract ResourceLocation geTextureResourceLocation();
 
   public abstract ResourceLocation getHouseStructure();
