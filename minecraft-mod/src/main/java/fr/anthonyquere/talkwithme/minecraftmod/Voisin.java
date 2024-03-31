@@ -6,6 +6,7 @@ import fr.anthonyquere.talkwithme.minecraftmod.neighbor.NeighborRenderer;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.HouseBlueprintBlockModelProvider;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.HouseBlueprintBlockStateProvider;
 import fr.anthonyquere.talkwithme.minecraftmod.neighbor.house.NeighborHouseMenuScreen;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.spawn.NeighborSpawnProvider;
 import fr.anthonyquere.talkwithme.minecraftmod.registries.BlocksRegistry;
 import fr.anthonyquere.talkwithme.minecraftmod.registries.MenuRegistry;
 import fr.anthonyquere.talkwithme.minecraftmod.registries.NeighborModelRegistry;
@@ -172,14 +173,19 @@ public class Voisin {
         var packOutput = generator.getPackOutput();
         var existingFileHelper = event.getExistingFileHelper();
 
+
         // Register model
         generator.addProvider(event.includeClient(), new HouseBlueprintBlockModelProvider(packOutput, existingFileHelper));
 
         neighborRegistry.getNeighbors()
-          .forEach(neighbor ->
+          .forEach(neighbor -> {
             // Register block state
-            generator.addProvider(event.includeClient(), new HouseBlueprintBlockStateProvider(packOutput, existingFileHelper, neighbor))
-          );
+            generator.addProvider(event.includeClient(), new HouseBlueprintBlockStateProvider(packOutput, existingFileHelper, neighbor));
+
+            // Register spawn provider
+            generator.addProvider(event.includeServer(), new NeighborSpawnProvider(packOutput, event.getLookupProvider(), neighbor));
+          });
+
 
       }
     }

@@ -12,6 +12,8 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -60,6 +63,10 @@ public abstract class Neighbor {
   public abstract ResourceLocation geTextureResourceLocation();
 
   public abstract ResourceLocation getHouseStructure();
+
+  public TagKey<Biome> getSpawnBiomes() {
+    return BiomeTags.IS_OVERWORLD;
+  }
 
   protected abstract List<Block> getRequiredBlocks();
 
