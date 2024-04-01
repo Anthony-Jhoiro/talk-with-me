@@ -51,7 +51,6 @@ public class Voisin {
 
     MinecraftForge.EVENT_BUS.register(new ModEventBusEvents());
     MinecraftForge.EVENT_BUS.register(this);
-    MinecraftForge.EVENT_BUS.register(ModEventBusClientEvents.class);
 
     // Register the commonSetup method for modloading
     modEventBus.addListener(this::commonSetup);

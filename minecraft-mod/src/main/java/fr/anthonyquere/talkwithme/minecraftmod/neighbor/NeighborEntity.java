@@ -39,6 +39,10 @@ public class NeighborEntity extends AgeableMob {
 
   private final Neighbor neighbor;
 
+  public Neighbor getNeighbor() {
+    return neighbor;
+  }
+
   public NeighborEntity(EntityType<? extends NeighborEntity> entityType, Level world, Neighbor neighbor) {
     super(entityType, world);
     this.setCustomName(Component.literal(neighbor.getName()));
