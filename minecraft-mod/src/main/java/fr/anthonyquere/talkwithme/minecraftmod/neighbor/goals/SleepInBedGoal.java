@@ -1,6 +1,6 @@
 package fr.anthonyquere.talkwithme.minecraftmod.neighbor.goals;
 
-import fr.anthonyquere.talkwithme.minecraftmod.neighbor.Neighbor;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.NeighborEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
@@ -15,10 +15,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.EnumSet;
 
 public class SleepInBedGoal extends MoveToBlockGoal {
-    private final Neighbor.Entity mob;
+    private final NeighborEntity mob;
     private long lastGoodNight;
 
-    public SleepInBedGoal(Neighbor.Entity mob) {
+    public SleepInBedGoal(NeighborEntity mob) {
         super(mob, 1, 16);
         this.mob = mob;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));

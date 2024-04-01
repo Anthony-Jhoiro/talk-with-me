@@ -1,11 +1,9 @@
 package fr.anthonyquere.talkwithme.minecraftmod.neighbor.house;
 
 import com.mojang.logging.LogUtils;
+import fr.anthonyquere.talkwithme.minecraftmod.neighbor.Neighbor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.data.models.blockstates.VariantProperty;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -20,15 +18,13 @@ import org.slf4j.Logger;
 
 import java.util.Objects;
 
-import static fr.anthonyquere.talkwithme.minecraftmod.Voisin.MODID;
-
-public abstract class HouseBlueprintBlock extends Block {
+public class HouseBlueprintBlock extends Block {
   private static final Logger LOGGER = LogUtils.getLogger();
+  private final Neighbor neighbor;
 
-  protected abstract ResourceLocation getHouseResourceLocation();
-
-  protected HouseBlueprintBlock() {
+  public HouseBlueprintBlock(Neighbor neighbor) {
     super(Properties.of().instabreak());
+    this.neighbor = neighbor;
   }
 
   @Override
@@ -39,7 +35,7 @@ public abstract class HouseBlueprintBlock extends Block {
 
     // On server
     var maybeTemplate = level.getServer().getStructureManager()
-      .get(getHouseResourceLocation());
+      .get(neighbor.getHouseStructure());
 
     if (maybeTemplate.isEmpty()) {
       player.displayClientMessage(Component.literal("The home was not found"), false);
@@ -59,10 +55,5 @@ public abstract class HouseBlueprintBlock extends Block {
     );
 
     return InteractionResult.sidedSuccess(placingHouseResult);
-  }
-
-  @Override
-  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    super.createBlockStateDefinition(builder);
   }
 }

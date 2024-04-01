@@ -43,7 +43,7 @@ public class BlocksRegistry {
   }
 
   private void load() {
-    Voisin.neighborRegistry.getNeighbors()
+    NeighborRegistry.getInstance().getNeighbors()
       .forEach(neighbor ->
         this.registerBlock(neighbor.getHouseBlueprintBlockId(), neighbor::getHouseBlock)
       );
