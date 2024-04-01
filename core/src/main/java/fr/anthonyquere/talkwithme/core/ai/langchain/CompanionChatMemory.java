@@ -1,6 +1,11 @@
 package fr.anthonyquere.talkwithme.core.ai.langchain;
 
-import dev.langchain4j.data.message.*;
+import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.data.message.ChatMessage;
+import dev.langchain4j.data.message.ChatMessageType;
+import dev.langchain4j.data.message.SystemMessage;
+import dev.langchain4j.data.message.TextContent;
+import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
 import fr.anthonyquere.talkwithme.core.crud.message.Message;
@@ -80,7 +85,7 @@ public class CompanionChatMemory implements ChatMemory {
         default -> null;
       })
       .filter(Objects::nonNull)
-      .toList().reversed();
+      .toList();
 
     messages.addAll(discussion);
     return messages;

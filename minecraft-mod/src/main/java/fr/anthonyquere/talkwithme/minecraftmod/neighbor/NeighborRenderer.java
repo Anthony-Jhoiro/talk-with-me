@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-public class NeighborRenderer<T extends Neighbor.Entity> extends MobRenderer<T, EntityModel<T>> {
+public class NeighborRenderer<T extends NeighborEntity> extends MobRenderer<T, EntityModel<T>> {
     private final Neighbor neighbor;
 
     public NeighborRenderer(EntityRendererProvider.Context context, Neighbor neighbor, Function<ModelPart, EntityModel<T>> mb) {
@@ -17,7 +17,7 @@ public class NeighborRenderer<T extends Neighbor.Entity> extends MobRenderer<T, 
         this.neighbor = neighbor;
     }
 
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Neighbor.Entity _ignored) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull NeighborEntity _ignored) {
         return neighbor.geTextureResourceLocation();
     }
 }

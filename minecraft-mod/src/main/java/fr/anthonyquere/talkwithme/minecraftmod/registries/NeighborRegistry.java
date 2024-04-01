@@ -6,6 +6,13 @@ import fr.anthonyquere.talkwithme.minecraftmod.vulpis.Vulpis;
 import java.util.List;
 
 public class NeighborRegistry {
+  private static NeighborRegistry instance;
+  public static NeighborRegistry getInstance() {
+    if (instance == null) {
+      instance = new NeighborRegistry();
+    }
+    return instance;
+  }
 
     private final List<Neighbor> neighbors;
 
