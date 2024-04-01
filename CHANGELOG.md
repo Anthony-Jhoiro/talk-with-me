@@ -1,3 +1,9 @@
+# [v1.5.0](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.4.0...v1.5.0) (2024-04-01)
+
+## ✨ New Features
+
+- [`388cce3`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/388cce3)  Add talk command (#11) (Issues: [`#11`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/11))
+
 # [v1.4.0](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.3.0...v1.4.0) (2024-03-31)
 
 ## ✨ New Features
