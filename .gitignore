@@ -56,3 +56,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 !gradle/wrapper/gradle-wrapper.jar
+
+# Idea conf
+!/.idea/icon.svg
+!/.idea/modules.xml
+!/.idea/modules/**
+!/.idea/modules/**/*.iml
