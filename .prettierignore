@@ -7,3 +7,6 @@
 
 # Gradle build
 build/
+
+# Generated files
+CHANGELOG.md
