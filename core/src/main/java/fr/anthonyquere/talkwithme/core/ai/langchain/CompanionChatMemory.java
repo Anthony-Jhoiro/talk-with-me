@@ -7,7 +7,7 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.TextContent;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
-import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
+import fr.anthonyquere.talkwithme.core.domains.Companion;
 import fr.anthonyquere.talkwithme.core.crud.message.Message;
 import fr.anthonyquere.talkwithme.core.crud.message.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CompanionChatMemory implements ChatMemory {
   @Override
   public void add(ChatMessage chatMessage) {
     var messageBuilder = Message.builder();
-    messageBuilder.companion(companion);
+    messageBuilder.companionId(companion.getId());
     messageBuilder.createdAt(LocalDateTime.now());
 
     // User messages
@@ -65,7 +65,7 @@ public class CompanionChatMemory implements ChatMemory {
       + companion.getBackground()
       + "\nYou live in a minecraft world and the user speaking to you is a player.";
 
-    var summary = messageRepository.getFirstByCompanion_IdAndTypeOrderByCreatedAtDesc(companion.getId(), "SUMMARY");
+    var summary = messageRepository.getFirstByCompanionIdAndTypeOrderByCreatedAtDesc(companion.getId(), "SUMMARY");
     if (summary.isPresent()) {
       systemMessage += "\nThis is a summary of the previous messages: " + summary.get().getMessage();
     }
@@ -76,7 +76,7 @@ public class CompanionChatMemory implements ChatMemory {
 
 
     var discussion = messageRepository
-      .getMessagesByCompanion_IdOrderByCreatedAtDesc(companion.getId(), Pageable.ofSize(10))
+      .getMessagesByCompanionIdOrderByCreatedAtDesc(companion.getId(), Pageable.ofSize(10))
       .stream()
       .filter(m -> m.getType() != null)
       .map(m -> switch (m.getType()) {

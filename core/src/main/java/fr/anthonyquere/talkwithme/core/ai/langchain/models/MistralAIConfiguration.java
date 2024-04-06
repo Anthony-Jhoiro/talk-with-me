@@ -17,7 +17,7 @@ public class MistralAIConfiguration {
       .apiKey(mistralApiKey)
       .maxTokens(100)
       .modelName("mistral-tiny")
-      .temperature(1.0d)
+      .temperature(0.7d)
       .logRequests(true)
       .logResponses(true)
       .maxRetries(1)

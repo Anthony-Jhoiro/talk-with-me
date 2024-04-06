@@ -21,6 +21,17 @@ repositories {
   mavenCentral()
 }
 
+sourceSets {
+  print projectDir
+  main {
+    resources {
+      srcDirs += [
+        "$projectDir/../data"
+      ]
+    }
+  }
+}
+
 dependencies {
   // Starters
   implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -32,6 +43,10 @@ dependencies {
   // Dependencies / Database
   implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
   implementation 'org.hibernate.orm:hibernate-community-dialects'
+
+  // Dependencies / Markdown
+  implementation 'org.commonmark:commonmark:0.22.0'
+  implementation 'org.commonmark:commonmark-ext-yaml-front-matter:0.22.0'
 
   // Dependencies / AI
   implementation 'dev.langchain4j:langchain4j:0.27.1'
@@ -46,6 +61,8 @@ dependencies {
 
 
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.assertj:assertj-core:3.25.1'
+
 }
 
 tasks.named('test') {

@@ -1,7 +1,7 @@
 package fr.anthonyquere.talkwithme.core.ai.langchain;
 
 import fr.anthonyquere.talkwithme.core.ai.langchain.services.Summary;
-import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
+import fr.anthonyquere.talkwithme.core.domains.Companion;
 import fr.anthonyquere.talkwithme.core.crud.message.Message;
 import fr.anthonyquere.talkwithme.core.crud.message.MessageRepository;
 import jakarta.transaction.Transactional;
@@ -27,7 +27,7 @@ public class SummaryService {
 
   @Transactional
   public void summarizeChat(Companion companion) {
-    var messages = messageRepository.getMessagesByCompanion_IdOrderByCreatedAtDesc(companion.getId(), Pageable.ofSize(20));
+    var messages = messageRepository.getMessagesByCompanionIdOrderByCreatedAtDesc(companion.getId(), Pageable.ofSize(20));
 
     var notArchivedMessages = messages.stream()
       .filter(m -> m.getStatus() == null || m.getStatus().equals(Message.Status.NOT_ARCHIVED))
@@ -64,7 +64,7 @@ public class SummaryService {
     var summaryMessage = Message.builder()
       .message(sum)
       .type("SUMMARY")
-      .companion(companion)
+      .companionId(companion.getId())
       .createdAt(LocalDateTime.now())
       .build();
 

@@ -1,6 +1,7 @@
-package fr.anthonyquere.talkwithme.core.crud.companions;
+package fr.anthonyquere.talkwithme.core.data.md.companions;
 
 import fr.anthonyquere.talkwithme.core.crud.message.Message;
+import fr.anthonyquere.talkwithme.core.domains.Companion;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 

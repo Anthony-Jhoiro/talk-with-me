@@ -1,7 +1,7 @@
 package fr.anthonyquere.talkwithme.core.ai.langchain.services;
 
 import dev.langchain4j.service.*;
-import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
+import fr.anthonyquere.talkwithme.core.domains.Companion;
 
 public interface TalkWithCompanion {
 

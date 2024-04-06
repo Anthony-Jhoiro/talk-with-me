@@ -1,3 +1,9 @@
 spring:
   profiles:
     active: 'langchain,sqlite'
+
+  web:
+    resources:
+      static-locations:
+        - 'classpath:/static/'
+        - 'classpath:/neighbors/'

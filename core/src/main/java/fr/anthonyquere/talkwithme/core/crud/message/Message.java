@@ -1,10 +1,17 @@
 package fr.anthonyquere.talkwithme.core.crud.message;
 
-import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OrderBy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -16,6 +23,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Message {
 
   @Id
@@ -35,11 +43,9 @@ public class Message {
   @CreatedDate
   @OrderBy
   private LocalDateTime createdAt;
-  @ManyToOne
-  private Companion companion;
 
-  public Message() {
-  }
+  private String companionId;
+  private String userId;
 
   @Override
   public String toString() {

@@ -9,10 +9,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MessageRepository extends CrudRepository<Message, UUID> {
-  List<Message> getMessagesByCompanion_IdOrderByCreatedAtDesc(String companionId, Pageable pageable);
+  List<Message> getMessagesByCompanionIdOrderByCreatedAtDesc(String companionId, Pageable pageable);
 
   @Query("select m from Message m " +
-    "where m.companion.id = :companionId " +
+    "where m.companionId = :companionId " +
     "and m.type in ('USER', 'AI') " +
     "and (m.status is null or m.status != 'ARCHIVED') " +
     "order by m.createdAt asc"
@@ -20,7 +20,7 @@ public interface MessageRepository extends CrudRepository<Message, UUID> {
   List<Message> getLatestMassages(String companionId);
 
   @Query("select m.message from Message m " +
-    "where m.companion.id = :companionId " +
+    "where m.companionId = :companionId " +
     "and m.type = 'SUMMARY' " +
     "and (m.status is null or m.status != 'ARCHIVED') " +
     "order by m.createdAt desc " +
@@ -28,7 +28,7 @@ public interface MessageRepository extends CrudRepository<Message, UUID> {
   )
   Optional<String> getLatestSummary(String companionId);
 
-  Optional<Message> getFirstByCompanion_IdAndTypeOrderByCreatedAtDesc(String companionId, String type);
+  Optional<Message> getFirstByCompanionIdAndTypeOrderByCreatedAtDesc(String companionId, String type);
 
   void deleteByCompanionId(String companionId);
 }

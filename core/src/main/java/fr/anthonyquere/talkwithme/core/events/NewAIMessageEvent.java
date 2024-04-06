@@ -1,6 +1,6 @@
 package fr.anthonyquere.talkwithme.core.events;
 
-import fr.anthonyquere.talkwithme.core.crud.companions.Companion;
+import fr.anthonyquere.talkwithme.core.domains.Companion;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
