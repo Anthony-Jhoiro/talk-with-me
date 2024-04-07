@@ -8,8 +8,8 @@ import dev.langchain4j.data.message.TextContent;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import fr.anthonyquere.talkwithme.core.domains.Companion;
-import fr.anthonyquere.talkwithme.core.crud.message.Message;
-import fr.anthonyquere.talkwithme.core.crud.message.MessageRepository;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.MessageJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CompanionChatMemory implements ChatMemory {
   private final Companion companion;
-  private final MessageRepository messageRepository;
+  private final MessageJpaRepository messageRepository;
 
   @Override
   public Object id() {

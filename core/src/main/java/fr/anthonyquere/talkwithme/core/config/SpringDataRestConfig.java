@@ -1,7 +1,6 @@
 package fr.anthonyquere.talkwithme.core.config;
 
-import fr.anthonyquere.talkwithme.core.domains.Companion;
-import fr.anthonyquere.talkwithme.core.crud.message.Message;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.Message;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;

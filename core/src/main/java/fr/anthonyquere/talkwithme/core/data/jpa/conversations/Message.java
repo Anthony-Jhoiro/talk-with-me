@@ -1,4 +1,4 @@
-package fr.anthonyquere.talkwithme.core.crud.message;
+package fr.anthonyquere.talkwithme.core.data.jpa.conversations;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

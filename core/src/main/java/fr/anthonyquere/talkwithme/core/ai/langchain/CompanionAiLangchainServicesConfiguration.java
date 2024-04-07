@@ -2,33 +2,33 @@ package fr.anthonyquere.talkwithme.core.ai.langchain;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import fr.anthonyquere.talkwithme.core.ai.langchain.services.Summary;
-import fr.anthonyquere.talkwithme.core.ai.langchain.services.TalkWithCompanion;
+import fr.anthonyquere.talkwithme.core.ai.langchain.services.SummaryLangchainService;
+import fr.anthonyquere.talkwithme.core.ai.langchain.services.TalkWithCompanionLangchainService;
 import fr.anthonyquere.talkwithme.core.domains.Companion;
-import fr.anthonyquere.talkwithme.core.crud.message.MessageRepository;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.MessageJpaRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CompanionAiService {
+public class CompanionAiLangchainServicesConfiguration {
 
   @Bean
-  public TalkWithCompanion buildAiCompanionService(
+  public TalkWithCompanionLangchainService buildAiCompanionService(
     ChatLanguageModel model,
-    MessageRepository messageRepository
+    MessageJpaRepository messageRepository
 
   ) {
-    return AiServices.builder(TalkWithCompanion.class)
+    return AiServices.builder(TalkWithCompanionLangchainService.class)
       .chatLanguageModel(model)
       .chatMemoryProvider(companion -> new CompanionChatMemory((Companion) companion, messageRepository))
       .build();
   }
 
   @Bean
-  public Summary buildAiSummaryService(
+  public SummaryLangchainService buildAiSummaryService(
     ChatLanguageModel model
   ) {
-    return AiServices.builder(Summary.class)
+    return AiServices.builder(SummaryLangchainService.class)
       .chatLanguageModel(model)
       .build();
   }

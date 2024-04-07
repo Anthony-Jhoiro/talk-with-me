@@ -1,5 +1,6 @@
 package fr.anthonyquere.talkwithme.core.data.md.companions;
 
+import fr.anthonyquere.talkwithme.core.CompanionStorage;
 import fr.anthonyquere.talkwithme.core.domains.Companion;
 import fr.anthonyquere.talkwithme.core.domains.CompanionRetrieveError;
 import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
@@ -15,9 +16,13 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
-public class MarkdownCompanionRepository {
+public class MarkdownCompanionRepository implements CompanionStorage {
+
+  @Override
   public Companion getById(String id) {
     var parser = Parser.builder()
       .extensions(List.of(YamlFrontMatterExtension.create()))
@@ -49,23 +54,22 @@ public class MarkdownCompanionRepository {
       .build();
   }
 
+  @Override
   public Collection<Companion> findAll() {
-
-
-    List<String> companionIds;
-
+    Set<String> companionIds;
 
     try {
       companionIds = Arrays.stream(new String(getClass().getClassLoader().getResourceAsStream("neighbors").readAllBytes())
           .split("\n"))
         .filter(id -> !id.isEmpty())
-        .toList();
+        .collect(Collectors.toSet());
+      ;
 
     } catch (IOException ex) {
       throw new CompanionRetrieveError("Fail to retrieve companion", ex);
     }
 
-    return companionIds.stream().map(this::getById).toList();
+    return companionIds.stream().map(this::getById).collect(Collectors.toSet());
   }
 
   private static class MarkdownParser extends YamlFrontMatterVisitor {

@@ -1,4 +1,4 @@
-package fr.anthonyquere.talkwithme.core.crud.message;
+package fr.anthonyquere.talkwithme.core.data.jpa.conversations;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MessageRepository extends CrudRepository<Message, UUID> {
+public interface MessageJpaRepository extends CrudRepository<Message, UUID> {
   List<Message> getMessagesByCompanionIdOrderByCreatedAtDesc(String companionId, Pageable pageable);
+
+  List<Message> getMessagesByCompanionIdAndUserIdOrderByCreatedAtDesc(String companionId, String userId, Pageable pageable);
 
   @Query("select m from Message m " +
     "where m.companionId = :companionId " +

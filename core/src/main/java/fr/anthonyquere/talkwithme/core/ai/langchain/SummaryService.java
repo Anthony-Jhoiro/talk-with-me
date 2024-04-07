@@ -1,9 +1,9 @@
 package fr.anthonyquere.talkwithme.core.ai.langchain;
 
-import fr.anthonyquere.talkwithme.core.ai.langchain.services.Summary;
+import fr.anthonyquere.talkwithme.core.ai.langchain.services.SummaryLangchainService;
 import fr.anthonyquere.talkwithme.core.domains.Companion;
-import fr.anthonyquere.talkwithme.core.crud.message.Message;
-import fr.anthonyquere.talkwithme.core.crud.message.MessageRepository;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.data.jpa.conversations.MessageJpaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 @Slf4j
 public class SummaryService {
 
-  private final MessageRepository messageRepository;
-  private final Summary summary;
+  private final MessageJpaRepository messageRepository;
+  private final SummaryLangchainService summaryLangchainService;
 
   @Value("${hardRetentionSummary:5}")
   private Integer hardRetentionSummary = 5;
@@ -55,7 +55,7 @@ public class SummaryService {
     String sum;
 
     try {
-      sum = summary.summarize("Summarize the following messages as best you can as if you were explaining it to the AI.\n" + String.join("\n", messagesToArchive.stream().map(Message::toString).toList()));
+      sum = summaryLangchainService.summarize("Summarize the following messages as best you can as if you were explaining it to the AI.\n" + String.join("\n", messagesToArchive.stream().map(Message::toString).toList()));
     } catch (Exception e) {
       log.error("Fail to generate summary: {}", e.getMessage());
       return;
