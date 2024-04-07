@@ -1,7 +1,7 @@
 package fr.anthonyquere.talkwithme.core.crud.companions;
 
-import fr.anthonyquere.talkwithme.core.data.md.companions.MarkdownCompanionRepository;
-import fr.anthonyquere.talkwithme.core.domains.CompanionRetrieveError;
+import fr.anthonyquere.talkwithme.core.adapters.data.md.companions.MarkdownCompanionRepository;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionRetrieveError;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,11 +16,11 @@ class MarkdownCompanionRepositoryTest {
 
     var companion = new MarkdownCompanionRepository().getById(name);
 
-    assertThat(companion.getBackground()).isEqualTo("Vulpis est très curieux mais très timide. De nature casanière, il a appris tout ce qu'il sait grâce aux livres.");
-    assertThat(companion.getId()).isEqualTo("vulpis");
-    assertThat(companion.getName()).isEqualTo("Vulpis");
-    assertThat(companion.getGender()).isEqualTo("male");
-    assertThat(companion.getSpecies()).isEqualTo("fox");
+    assertThat(companion.background()).isEqualTo("Vulpis est très curieux mais très timide. De nature casanière, il a appris tout ce qu'il sait grâce aux livres.");
+    assertThat(companion.id()).isEqualTo("vulpis");
+    assertThat(companion.name()).isEqualTo("Vulpis");
+    assertThat(companion.gender()).isEqualTo("male");
+    assertThat(companion.species()).isEqualTo("fox");
   }
 
   @Test

@@ -7,3 +7,9 @@ spring:
       static-locations:
         - 'classpath:/static/'
         - 'classpath:/neighbors/'
+logging:
+  level:
+    dev:
+      langchain4j:
+        model:
+          mistralai: DEBUG
