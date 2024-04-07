@@ -1,6 +1,6 @@
 package fr.anthonyquere.talkwithme.core.adapters.api;
 
-import fr.anthonyquere.talkwithme.core.hexa.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
 import lombok.Builder;
 
 import java.util.List;

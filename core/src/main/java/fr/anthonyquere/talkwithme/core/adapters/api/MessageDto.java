@@ -1,6 +1,6 @@
 package fr.anthonyquere.talkwithme.core.adapters.api;
 
-import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.hexa.domains.Message;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 public record MessageDto(
   String id,
   String message,
-  String type,
+  Message.Type type,
   Message.Status status,
   LocalDateTime createdAt
 ) {
   public static MessageDto fromDomain(Message domain) {
     return MessageDto.builder()
-      .createdAt(domain.getCreatedAt())
-      .id(domain.getId().toString())
-      .message(domain.getMessage())
-      .status(domain.getStatus())
-      .type(domain.getType())
+      .createdAt(domain.createdAt())
+      .id(domain.id().toString())
+      .message(domain.message())
+      .status(domain.status())
+      .type(domain.type())
       .build();
   }
 

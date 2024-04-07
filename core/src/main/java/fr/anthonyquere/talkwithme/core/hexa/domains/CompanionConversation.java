@@ -1,7 +1,5 @@
-package fr.anthonyquere.talkwithme.core.hexa;
+package fr.anthonyquere.talkwithme.core.hexa.domains;
 
-import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.Message;
-import fr.anthonyquere.talkwithme.core.hexa.domains.Companion;
 import lombok.Builder;
 
 import java.util.List;

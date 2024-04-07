@@ -5,7 +5,7 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.UserName;
 import dev.langchain4j.service.V;
-import fr.anthonyquere.talkwithme.core.hexa.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
 
 public interface TalkWithCompanionLangchainService {
 

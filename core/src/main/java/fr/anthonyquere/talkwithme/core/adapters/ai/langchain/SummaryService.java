@@ -1,7 +1,7 @@
 package fr.anthonyquere.talkwithme.core.adapters.ai.langchain;
 
 import fr.anthonyquere.talkwithme.core.adapters.ai.langchain.services.SummaryLangchainService;
-import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.MessageEntity;
 import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.MessageJpaRepository;
 import fr.anthonyquere.talkwithme.core.hexa.domains.Companion;
 import jakarta.transaction.Transactional;
@@ -30,7 +30,7 @@ public class SummaryService {
     var messages = messageRepository.getMessagesByCompanionIdOrderByCreatedAtDesc(companion.id(), Pageable.ofSize(20));
 
     var notArchivedMessages = messages.stream()
-      .filter(m -> m.getStatus() == null || m.getStatus().equals(Message.Status.NOT_ARCHIVED))
+      .filter(m -> m.getStatus() == null || m.getStatus().equals(MessageEntity.Status.NOT_ARCHIVED))
       .toList();
 
     if (notArchivedMessages.size() < hardRetentionSummary) {
@@ -55,13 +55,13 @@ public class SummaryService {
     String sum;
 
     try {
-      sum = summaryLangchainService.summarize("Summarize the following messages as best you can as if you were explaining it to the AI.\n" + String.join("\n", messagesToArchive.stream().map(Message::toString).toList()));
+      sum = summaryLangchainService.summarize("Summarize the following messages as best you can as if you were explaining it to the AI.\n" + String.join("\n", messagesToArchive.stream().map(MessageEntity::toString).toList()));
     } catch (Exception e) {
       log.error("Fail to generate summary: {}", e.getMessage());
       return;
     }
 
-    var summaryMessage = Message.builder()
+    var summaryMessage = MessageEntity.builder()
       .message(sum)
       .type("SUMMARY")
       .companionId(companion.id())
@@ -70,7 +70,7 @@ public class SummaryService {
 
 
     // Mark previous messages as archived
-    messagesToArchive.forEach(m -> m.setStatus(Message.Status.ARCHIVED));
+    messagesToArchive.forEach(m -> m.setStatus(MessageEntity.Status.ARCHIVED));
     messageRepository.saveAll(messagesToArchive);
     // Save summary
     messageRepository.save(summaryMessage);

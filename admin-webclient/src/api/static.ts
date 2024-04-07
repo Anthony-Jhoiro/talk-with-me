@@ -1,4 +1,4 @@
-import {API_ENDPOINT} from "./api";
+import { API_ENDPOINT } from './api';
 
 export function buildStaticAssetLink(path: string) {
   return API_ENDPOINT + path;

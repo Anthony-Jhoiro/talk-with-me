@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Object3D from './Object3D.vue';
-import {TresCanvas} from '@tresjs/core';
+import { TresCanvas } from '@tresjs/core';
 
-const {objectFile, textureFile} = defineProps<{
+const { objectFile, textureFile } = defineProps<{
   objectFile: string;
   textureFile: string;
 }>();
@@ -10,12 +10,12 @@ const {objectFile, textureFile} = defineProps<{
 
 <template>
   <TresCanvas :alpha="true">
-    <TresPerspectiveCamera :position="[0.8, 1.5, -2]" :look-at="[0, 0.75, 0]"/>
+    <TresPerspectiveCamera :position="[0.8, 1.5, -2]" :look-at="[0, 0.75, 0]" />
     <Suspense>
       <!-- Object is handled in another component to avoid server-side rendering issues -->
-      <Object3D :object-file="objectFile" :texture-file="textureFile"/>
+      <Object3D :object-file="objectFile" :texture-file="textureFile" />
     </Suspense>
-    <TresAmbientLight :intensity="2"/>
+    <TresAmbientLight :intensity="2" />
   </TresCanvas>
 </template>
 

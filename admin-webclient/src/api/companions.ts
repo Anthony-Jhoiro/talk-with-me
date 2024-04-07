@@ -33,7 +33,6 @@ export const listCompanions: (
 ) => Promise<ListCompanionsBody> = (opts) =>
   fetch(API_ENDPOINT + '/companions', opts).then((r) => r.json());
 
-
 export const getCompanionWithMessages: (
   companionId: string,
   opts?: RequestInit,

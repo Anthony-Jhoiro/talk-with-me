@@ -1,12 +1,14 @@
 package fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations;
 
-import fr.anthonyquere.talkwithme.core.hexa.CompanionConversation;
 import fr.anthonyquere.talkwithme.core.hexa.CompanionConversationStorage;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -20,16 +22,24 @@ public class ConversationsRepository implements CompanionConversationStorage {
     return CompanionConversation.builder()
       .companionId(companionId)
       .userId(userId)
-      .messages(messages)
+      .messages(messages.stream().map(MessageEntity::toDomain).toList())
       .build();
   }
 
   @Override
   public void saveMessage(CompanionConversation.Id conversationId, Message message) {
-    message.setCompanionId(conversationId.companionId());
-    message.setUserId(conversationId.userId());
-    message.setCreatedAt(LocalDateTime.now());
-    messageJpaRepository.save(message);
+    var messageEntity = MessageEntity.builder()
+      .id(UUID.randomUUID())
+      .message(message.message())
+      .status(MessageEntity.Status.valueOf(message.status().name()))
+      .type(message.status().name())
+
+      .companionId(conversationId.companionId())
+      .userId(conversationId.userId())
+      .createdAt(LocalDateTime.now())
+      .build();
+
+    messageJpaRepository.save(messageEntity);
   }
 
   @Override
@@ -43,15 +53,15 @@ public class ConversationsRepository implements CompanionConversationStorage {
   @Override
   public void setIntroductionMessage(CompanionConversation.Id conversationId, Message message) {
     var systemMessage = messageJpaRepository.findByCompanionIdAndUserIdAndType(conversationId.companionId(), conversationId.userId(), "SYSTEM")
-      .orElse(Message.builder()
+      .orElse(MessageEntity.builder()
         .companionId(conversationId.companionId())
         .userId(conversationId.userId())
         .createdAt(LocalDateTime.now())
         .type("SYSTEM")
-        .status(Message.Status.NOT_ARCHIVED)
+        .status(MessageEntity.Status.NOT_ARCHIVED)
         .build());
 
-    systemMessage.setMessage(message.getMessage());
+    systemMessage.setMessage(message.message());
     messageJpaRepository.save(systemMessage);
   }
 

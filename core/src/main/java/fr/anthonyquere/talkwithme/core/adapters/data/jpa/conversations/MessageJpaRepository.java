@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MessageJpaRepository extends CrudRepository<Message, UUID> {
-  List<Message> getMessagesByCompanionIdOrderByCreatedAtDesc(String companionId, Pageable pageable);
+public interface MessageJpaRepository extends CrudRepository<MessageEntity, UUID> {
+  List<MessageEntity> getMessagesByCompanionIdOrderByCreatedAtDesc(String companionId, Pageable pageable);
 
-  List<Message> getMessagesByCompanionIdAndUserIdOrderByCreatedAtDesc(String companionId, String userId, Pageable pageable);
+  List<MessageEntity> getMessagesByCompanionIdAndUserIdOrderByCreatedAtDesc(String companionId, String userId, Pageable pageable);
 
   void deleteByCompanionIdAndUserId(String companionId, String userId);
 
-  Optional<Message> findByCompanionIdAndUserIdAndType(String companionId, String userId, String type);
+  Optional<MessageEntity> findByCompanionIdAndUserIdAndType(String companionId, String userId, String type);
 }

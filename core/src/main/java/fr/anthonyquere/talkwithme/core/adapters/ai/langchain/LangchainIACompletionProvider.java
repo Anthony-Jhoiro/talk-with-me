@@ -1,6 +1,6 @@
 package fr.anthonyquere.talkwithme.core.adapters.ai.langchain;
 
-import fr.anthonyquere.talkwithme.core.hexa.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
 import fr.anthonyquere.talkwithme.core.hexa.CompletionOutput;
 import fr.anthonyquere.talkwithme.core.hexa.CompletionProvider;
 import fr.anthonyquere.talkwithme.core.adapters.ai.langchain.services.TalkWithCompanionLangchainService;

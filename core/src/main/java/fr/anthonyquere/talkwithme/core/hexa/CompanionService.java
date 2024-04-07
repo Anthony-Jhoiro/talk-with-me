@@ -1,6 +1,7 @@
 package fr.anthonyquere.talkwithme.core.hexa;
 
 import fr.anthonyquere.talkwithme.core.hexa.domains.Companion;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

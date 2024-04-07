@@ -1,6 +1,7 @@
 package fr.anthonyquere.talkwithme.core.hexa;
 
-import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.Message;
 
 public interface CompanionConversationStorage {
   CompanionConversation getConversationByCompanionAndUser(String companionId, String userId);

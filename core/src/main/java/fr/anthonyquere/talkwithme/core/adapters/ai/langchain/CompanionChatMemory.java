@@ -2,14 +2,13 @@ package fr.anthonyquere.talkwithme.core.adapters.ai.langchain;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
-import dev.langchain4j.data.message.ChatMessageType;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.TextContent;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
-import fr.anthonyquere.talkwithme.core.hexa.CompanionConversation;
 import fr.anthonyquere.talkwithme.core.hexa.CompanionConversationStorage;
-import fr.anthonyquere.talkwithme.core.adapters.data.jpa.conversations.Message;
+import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
+import fr.anthonyquere.talkwithme.core.hexa.domains.Message;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -31,14 +30,12 @@ public class CompanionChatMemory implements ChatMemory {
   @Override
   public void add(ChatMessage chatMessage) {
     var messageBuilder = Message.builder();
-    messageBuilder.companionId(this.companionConversationId.companionId());
-    messageBuilder.userId(this.companionConversationId.userId());
     messageBuilder.createdAt(LocalDateTime.now());
 
     // User messages
     if (chatMessage instanceof UserMessage m) {
       messageBuilder
-        .type(ChatMessageType.USER.name())
+        .type(Message.Type.USER)
         .message(
           String.join(" ", m.contents().stream().map(c -> {
             if (c instanceof TextContent textContent) {
@@ -49,11 +46,11 @@ public class CompanionChatMemory implements ChatMemory {
         );
     } else if (chatMessage instanceof AiMessage m) {
       messageBuilder
-        .type(ChatMessageType.AI.name())
+        .type(Message.Type.AI)
         .message(m.text());
     } else if (chatMessage instanceof SystemMessage m) {
       messageBuilder
-        .type(ChatMessageType.SYSTEM.name())
+        .type(Message.Type.SYSTEM)
         .message(m.text());
       conversationsRepository.setIntroductionMessage(this.companionConversationId, messageBuilder.build());
       return;
@@ -70,11 +67,11 @@ public class CompanionChatMemory implements ChatMemory {
       .getConversationByCompanionAndUser(companionConversationId.companionId(), companionConversationId.userId())
       .messages()
       .stream()
-      .filter(m -> m.getType() != null)
-      .map(m -> switch (m.getType()) {
-        case "USER" -> new UserMessage(m.getMessage());
-        case "AI" -> new AiMessage(m.getMessage());
-        case "SYSTEM" -> new SystemMessage(m.getMessage());
+      .filter(m -> m.type() != null)
+      .map(m -> switch (m.type()) {
+        case USER -> new UserMessage(m.message());
+        case AI -> new AiMessage(m.message());
+        case SYSTEM -> new SystemMessage(m.message());
         default -> null;
       })
       .filter(Objects::nonNull)
