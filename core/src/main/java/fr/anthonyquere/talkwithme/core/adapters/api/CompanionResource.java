@@ -30,14 +30,14 @@ public class CompanionResource {
     return companionService.listAllCompanions().stream().map(CompanionDto::fromDomain).toList();
   }
 
-  @PostMapping("/{companionId}/discussion/{userId}")
+  @PostMapping("/{companionId}/conversation/{userId}")
   public CompanionConversationDto sendMessage(@PathVariable String companionId, @PathVariable String userId, @RequestBody TalkRequestPayload talkRequestPayload) {
     companionService.sendMessage(companionId, userId, talkRequestPayload.question);
     return CompanionConversationDto.fromDomain(companionService.getConversationById(companionId, userId));
   }
 
-  @GetMapping("/{companionId}/discussion/{userId}")
-  public CompanionConversationDto getDiscussion(@PathVariable String companionId, @PathVariable String userId) {
+  @GetMapping("/{companionId}/conversation/{userId}")
+  public CompanionConversationDto getConversation(@PathVariable String companionId, @PathVariable String userId) {
     return CompanionConversationDto.fromDomain(companionService.getConversationById(companionId, userId));
   }
 

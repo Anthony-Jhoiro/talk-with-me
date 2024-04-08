@@ -9,7 +9,7 @@ const additionalClasses: Record<Message['type'], string> = {
   USER: 'border-blue',
   AI: 'border-green',
   SYSTEM: 'border-pink',
-  SUMMARY: 'border-subtext0 text-subtext0',
+  SUMMARY: 'border-subtext0 text-subtext0 whitespace-pre',
 };
 </script>
 
@@ -18,7 +18,7 @@ const additionalClasses: Record<Message['type'], string> = {
     class="border-l-4 px-5 py-2 my-1"
     :class="additionalClasses[message.type]"
   >
-    <p>{{ message.message }}</p>
+    <p v-html="message.message"></p>
   </div>
 </template>
 

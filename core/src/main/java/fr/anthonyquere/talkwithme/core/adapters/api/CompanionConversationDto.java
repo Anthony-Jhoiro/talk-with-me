@@ -3,6 +3,8 @@ package fr.anthonyquere.talkwithme.core.adapters.api;
 import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionConversation;
 import lombok.Builder;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -14,10 +16,12 @@ public record CompanionConversationDto(
 ) {
 
   public static CompanionConversationDto fromDomain(CompanionConversation domain) {
+    var messages = new ArrayList<>(domain.messages().stream().map(MessageDto::fromDomain).toList());
+    Collections.reverse(messages);
     return CompanionConversationDto.builder()
       .userId(domain.userId())
       .companion(CompanionDto.fromDomain(domain.companion()))
-      .messages(domain.messages().stream().map(MessageDto::fromDomain).toList())
+      .messages(messages)
       .build();
   }
 

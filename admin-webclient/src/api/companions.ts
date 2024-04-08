@@ -19,26 +19,33 @@ export type Message = {
   createdAt: string;
 };
 
-export type CompanionWithMessages = {
+const defaultUserId = 'Jhoiro';
+
+export type CompanionConversation = {
+  userId: string;
   companion: Companion;
   messages: Message[];
 };
 
 export type ListCompanionsBody = Companion[];
 
-export type GetCompanionMessagesBody = CompanionWithMessages;
+export type GetCompanionMessagesBody = CompanionConversation;
 
 export const listCompanions: (
   opts?: RequestInit,
 ) => Promise<ListCompanionsBody> = (opts) =>
   fetch(API_ENDPOINT + '/companions', opts).then((r) => r.json());
 
-export const getCompanionWithMessages: (
+export const getCompanionConversation: (
   companionId: string,
   opts?: RequestInit,
 ) => Promise<GetCompanionMessagesBody> = (companionId) =>
   fetch(
-    API_ENDPOINT + '/companions/' + companionId + '?projection=messages',
+    API_ENDPOINT +
+      '/companions/' +
+      companionId +
+      '/conversation/' +
+      defaultUserId,
   ).then((r) => r.json());
 
 export const sendMessage: (
