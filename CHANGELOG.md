@@ -1,3 +1,13 @@
+# [v1.5.3](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.5.2...v1.5.3) (2024-04-21)
+
+## ⬆️ Upgraded dependencies
+
+- [`002292a`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/002292a)  upgrade nx (#15) (Issues: [`#15`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/15))
+
+## 🍱 Added or updated assets
+
+- [`ec13c51`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/ec13c51)  update Olympe and Otis character sheets (#16) (Issues: [`#16`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/16))
+
 # [v1.5.2](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.5.1...v1.5.2) (2024-04-21)
 
 ## 🍱 Added or updated assets
