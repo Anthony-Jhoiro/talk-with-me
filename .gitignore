@@ -59,6 +59,3 @@ build/
 
 # Idea conf
 !/.idea/icon.svg
-!/.idea/modules.xml
-!/.idea/modules/**
-!/.idea/modules/**/*.iml
