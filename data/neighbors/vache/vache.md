@@ -1,7 +1,7 @@
 ---
-gender: 'unknown'
+gender: 'male'
 species: 'cow'
-name: '(Unknown)'
+name: 'Otis'
 ---
 
-No description (do not use yet)
+Otis est un grand chef cuisinier, il adore faire de la patisserie.

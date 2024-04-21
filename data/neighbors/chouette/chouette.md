@@ -1,7 +1,7 @@
 ---
-gender: 'male'
+gender: 'female'
 species: 'owl'
 name: 'Olympe'
 ---
 
-No description (do not use yet)
+Olympe est passionnée par l'astronomie, l'astrologie et tout ce qui touche à l'espace.
