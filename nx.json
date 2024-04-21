@@ -30,15 +30,20 @@
       }
     },
     {
-      "plugin": "@jnxplus/nx-gradle",
+      "plugin": "@nx/gradle",
       "options": {
-        "gradleRootDirectory": "."
+        "testTargetName": "test",
+        "classesTargetName": "classes",
+        "buildTargetName": "build"
       }
     }
   ],
   "targetDefaults": {
     "install": {
       "cache": true
+    },
+    "build": {
+      "dependsOn": ["^build", "prebuild"]
     }
   }
 }
