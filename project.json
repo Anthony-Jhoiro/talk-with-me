@@ -1,5 +1,11 @@
 {
   "name": "talk-with-me",
   "$schema": "node_modules/nx/schemas/project-schema.json",
-  "targets": {}
+  "targets": {
+    "build": {
+      "options": {
+        "command": "echo ignored"
+      }
+    }
+  }
 }
