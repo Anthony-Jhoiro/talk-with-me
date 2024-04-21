@@ -1,3 +1,9 @@
+# [v1.5.1](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.5.0...v1.5.1) (2024-04-21)
+
+## 🐛 Bug Fixes
+
+- [`b175dc6`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/b175dc6)  fix production related issues (#12) (Issues: [`#12`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/12))
+
 # [v1.5.0](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.4.0...v1.5.0) (2024-04-01)
 
 ## ✨ New Features
