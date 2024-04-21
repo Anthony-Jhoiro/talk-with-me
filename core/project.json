@@ -4,6 +4,9 @@
   "projectType": "application",
   "sourceRoot": "./core/src",
   "targets": {
+    "build": {
+      "dependsOn": ["test"]
+    },
     "prebuild": {
       "options": {
         "commands": [
