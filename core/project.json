@@ -4,8 +4,13 @@
   "projectType": "application",
   "sourceRoot": "./core/src",
   "targets": {
+    "build": {
+      "options": {
+        "cwd": "core",
+        "command": "../gradlew -x test --dry-run build"
+      }
+    },
     "prebuild": {
-      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "mkdir -p ./core/src/main/resources/static",
