@@ -4,41 +4,7 @@
   "projectType": "application",
   "sourceRoot": "./core/src",
   "targets": {
-    "build": {
-      "executor": "@jnxplus/nx-gradle:run-task",
-      "outputs": ["{projectRoot}/build"],
-      "options": {
-        "task": "bootJar"
-      },
-      "dependsOn": ["copy-front"]
-    },
-    "build-image": {
-      "executor": "@jnxplus/nx-gradle:run-task",
-      "options": {
-        "task": "bootBuildImage"
-      },
-      "dependsOn": ["copy-front"]
-    },
-    "serve": {
-      "executor": "@jnxplus/nx-gradle:run-task",
-      "options": {
-        "task": "bootRun",
-        "keepItRunning": true
-      }
-    },
-    "test": {
-      "executor": "@jnxplus/nx-gradle:run-task",
-      "options": {
-        "task": "test"
-      }
-    },
-    "lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "echo ### To implement ###"
-      }
-    },
-    "copy-front": {
+    "prebuild": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
