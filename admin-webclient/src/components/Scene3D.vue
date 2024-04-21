@@ -10,7 +10,7 @@ const { objectFile, textureFile } = defineProps<{
 
 <template>
   <TresCanvas :alpha="true">
-    <TresPerspectiveCamera :position="[0.4, 1.5, -2]" :look-at="[0, 0.75, 0]" />
+    <TresPerspectiveCamera :position="[0.8, 1.5, -2]" :look-at="[0, 0.75, 0]" />
     <Suspense>
       <!-- Object is handled in another component to avoid server-side rendering issues -->
       <Object3D :object-file="objectFile" :texture-file="textureFile" />

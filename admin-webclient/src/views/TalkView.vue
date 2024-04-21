@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import {
-  type GetCompanionMessagesBody,
-  getCompanionWithMessages,
-} from '../api/companions';
+import { computed, onMounted, ref } from 'vue';
+import { type CompanionConversation } from '../api/companions';
 import Message from '../components/Message.vue';
-import { computed, ref } from 'vue';
+import LoadingIndicator from '../components/LoadingIndicator.vue';
+import Scene3D from '../components/Scene3D.vue';
+import {
+  buildCompanion3dTextureLink,
+  buildCompanionObjLink,
+} from '../api/static';
+import { useCompanionApi } from '../api/store';
 
 const { id } = defineProps<{
   id: string;
 }>();
 
-const companion = ref<GetCompanionMessagesBody>();
+const { getCompanionConversation, sendMessage } = useCompanionApi();
+
+const companion = ref<CompanionConversation>();
 const loadingCompanionErrorMessage = ref<string>();
 const isLoadingCompanion = ref(true);
 
 onMounted(() => {
-  getCompanionWithMessages(id)
-    .then((c: GetCompanionMessagesBody) => (companion.value = c))
+  getCompanionConversation(id)
+    .then((c) => (companion.value = c))
     .catch((e: any) => (loadingCompanionErrorMessage.value = e))
     .finally(() => (isLoadingCompanion.value = false));
 });
@@ -25,7 +30,7 @@ onMounted(() => {
 const formInput = ref('');
 const sendingMessage = ref<string | null>(null);
 
-const messages = computed(() => {
+const messages = computed<Message[]>(() => {
   if (!companion.value) {
     return [];
   }
@@ -38,8 +43,10 @@ const messages = computed(() => {
     ...companion.value.messages,
     {
       id: 'unknown',
-      message: sendingMessage,
+      message: sendingMessage.value,
       createdAt: new Date().toISOString(),
+      type: 'USER',
+      status: 'NOT_ARCHIVED',
     },
   ];
 });
@@ -47,12 +54,14 @@ const messages = computed(() => {
 async function onNewMessage(e: any) {
   e.preventDefault();
   sendingMessage.value = formInput.value;
-  //await sendMessage(companion.value!.companion.id, formInput.value);
 
-  // Reset input
-  formInput.value = '';
-  //await refresh();
-  sendingMessage.value = null;
+  await sendMessage(companion.value!.companion.id, formInput.value)
+    .then((c) => (companion.value = c))
+    .catch((e: any) => (loadingCompanionErrorMessage.value = e))
+    .finally(() => {
+      formInput.value = '';
+      sendingMessage.value = null;
+    });
 }
 
 const waitingForResponse = computed(() => sendingMessage.value !== null);
@@ -70,7 +79,10 @@ const waitingForResponse = computed(() => sendingMessage.value !== null);
   <template v-if="companion">
     <div id="companion-header" class="flex">
       <div class="size-52">
-        <Scene3D object-file="/vulpis.obj" texture-file="/vulpis.png" />
+        <Scene3D
+          :object-file="buildCompanionObjLink(companion.companion.id)"
+          :texture-file="buildCompanion3dTextureLink(companion.companion.id)"
+        />
       </div>
 
       <h2 class="text-4xl font-semibold">{{ companion.companion.name }}</h2>
@@ -107,5 +119,3 @@ const waitingForResponse = computed(() => sendingMessage.value !== null);
     </form>
   </template>
 </template>
-
-<style scoped></style>

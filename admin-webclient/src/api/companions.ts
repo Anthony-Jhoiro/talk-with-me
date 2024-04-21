@@ -1,13 +1,11 @@
 import { API_ENDPOINT } from './api';
 
-type HalResponseBody<Payload> = {
-  _embedded: Payload;
-};
-
 export type Companion = {
   id: string;
   name: string;
   background: string;
+  gender: string;
+  species: string;
 };
 
 export type Message = {
@@ -17,36 +15,36 @@ export type Message = {
   createdAt: string;
 };
 
-export type CompanionWithMessages = {
+export type CompanionConversation = {
+  userId: string;
   companion: Companion;
   messages: Message[];
 };
 
-export type ListCompanionsBody = HalResponseBody<{ companions: Companion[] }>;
+export type ListCompanionsBody = Companion[];
 
-export type GetCompanionMessagesBody = CompanionWithMessages;
+export type GetCompanionMessagesBody = CompanionConversation;
 
 export const listCompanions: (
   opts?: RequestInit,
 ) => Promise<ListCompanionsBody> = (opts) =>
   fetch(API_ENDPOINT + '/companions', opts).then((r) => r.json());
 
-export const getCompanionWithMessages: (
+export const requestGetCompanionConversation = (
   companionId: string,
   opts?: RequestInit,
-) => Promise<GetCompanionMessagesBody> = (companionId) =>
-  fetch(
-    API_ENDPOINT + '/companions/' + companionId + '?projection=messages',
-  ).then((r) => r.json());
+) => fetch(API_ENDPOINT + '/companions/' + companionId + '/conversation', opts);
 
-export const sendMessage: (
+export const requestSendMessage = (
   companionId: string,
   message: string,
-) => Promise<unknown> = (companionId: string, message: string) =>
-  fetch(API_ENDPOINT + '/companions/' + companionId + '/talk', {
+  opts?: RequestInit,
+) =>
+  fetch(API_ENDPOINT + '/companions/' + companionId + '/conversation', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...opts?.headers,
     },
     body: JSON.stringify({
       question: message,

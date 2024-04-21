@@ -12,7 +12,7 @@ const companions = ref<Companion[] | null>(null);
 
 onMounted(() => {
   listCompanions()
-    .then((res) => (companions.value = res._embedded.companions))
+    .then((res) => (companions.value = res))
     .catch((e) => (errorMessage.value = e))
     .finally(() => (pending.value = false));
 });
