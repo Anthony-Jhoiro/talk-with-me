@@ -1,3 +1,9 @@
+# [v1.5.2](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.5.1...v1.5.2) (2024-04-21)
+
+## 🍱 Added or updated assets
+
+- [`c8c72e4`](https://github.com/Anthony-Jhoiro/talk-with-me/commit/c8c72e4)  add rabbits assets and update cow obj model (#14) (Issues: [`#14`](https://github.com/Anthony-Jhoiro/talk-with-me/issues/14))
+
 # [v1.5.1](https://github.com/Anthony-Jhoiro/talk-with-me/compare/v1.5.0...v1.5.1) (2024-04-21)
 
 ## 🐛 Bug Fixes
