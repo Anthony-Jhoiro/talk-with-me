@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -31,8 +32,8 @@ public class ConversationsRepository implements CompanionConversationStorage {
     var messageEntity = MessageEntity.builder()
       .id(UUID.randomUUID())
       .message(message.message())
-      .status(MessageEntity.Status.valueOf(message.status().name()))
-      .type(message.status().name())
+      .status(Optional.ofNullable(message.status()).map(status -> MessageEntity.Status.valueOf(status.name())).orElse(MessageEntity.Status.NOT_ARCHIVED))
+      .type(message.type().name())
 
       .companionId(conversationId.companionId())
       .userId(conversationId.userId())

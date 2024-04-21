@@ -1,9 +1,5 @@
 import { API_ENDPOINT } from './api';
 
-type HalResponseBody<Payload> = {
-  _embedded: Payload;
-};
-
 export type Companion = {
   id: string;
   name: string;
@@ -18,8 +14,6 @@ export type Message = {
   type: 'USER' | 'AI' | 'SYSTEM' | 'SUMMARY';
   createdAt: string;
 };
-
-const defaultUserId = 'Jhoiro';
 
 export type CompanionConversation = {
   userId: string;
@@ -36,26 +30,21 @@ export const listCompanions: (
 ) => Promise<ListCompanionsBody> = (opts) =>
   fetch(API_ENDPOINT + '/companions', opts).then((r) => r.json());
 
-export const getCompanionConversation: (
+export const requestGetCompanionConversation = (
   companionId: string,
   opts?: RequestInit,
-) => Promise<GetCompanionMessagesBody> = (companionId) =>
-  fetch(
-    API_ENDPOINT +
-      '/companions/' +
-      companionId +
-      '/conversation/' +
-      defaultUserId,
-  ).then((r) => r.json());
+) => fetch(API_ENDPOINT + '/companions/' + companionId + '/conversation', opts);
 
-export const sendMessage: (
+export const requestSendMessage = (
   companionId: string,
   message: string,
-) => Promise<unknown> = (companionId: string, message: string) =>
-  fetch(API_ENDPOINT + '/companions/' + companionId + '/talk', {
+  opts?: RequestInit,
+) =>
+  fetch(API_ENDPOINT + '/companions/' + companionId + '/conversation', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...opts?.headers,
     },
     body: JSON.stringify({
       question: message,

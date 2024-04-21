@@ -3,14 +3,15 @@ package fr.anthonyquere.talkwithme.core.adapters.data.md.companions;
 import fr.anthonyquere.talkwithme.core.hexa.CompanionStorage;
 import fr.anthonyquere.talkwithme.core.hexa.domains.Companion;
 import fr.anthonyquere.talkwithme.core.hexa.domains.CompanionRetrieveError;
+import lombok.extern.slf4j.Slf4j;
 import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
 import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
 import org.commonmark.node.Node;
 import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Repository;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -18,8 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
+@Slf4j
 public class MarkdownCompanionRepository implements CompanionStorage {
 
   @Override
@@ -30,14 +33,14 @@ public class MarkdownCompanionRepository implements CompanionStorage {
 
     Node document;
 
-    try (var resource = getClass().getClassLoader().getResourceAsStream("neighbors/" + id + "/" + id + ".md")) {
-      if (resource == null) {
-        throw new FileNotFoundException("Fail to fetch resource");
-      }
-      document = parser.parseReader(new InputStreamReader(resource));
+    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    try {
+      var resolvedResources = resolver.getResources("classpath*:neighbors/**/" + id + ".md");
+      var resource = Stream.of(resolvedResources).findFirst().orElseThrow(() -> new CompanionRetrieveError("Companion with id [" + id + "] not found"));
 
+      document = parser.parseReader(new InputStreamReader(resource.getInputStream()));
     } catch (IOException ex) {
-      throw new CompanionRetrieveError("Fail to retrieve companion", ex);
+      throw new CompanionRetrieveError("Fail to retrieve companion [" + id + "]", ex);
     }
 
     var visitor = new MarkdownParser();
@@ -47,9 +50,9 @@ public class MarkdownCompanionRepository implements CompanionStorage {
 
     return Companion.builder()
       .id(id)
-      .name(yamlData.get("name").getFirst())
-      .species(yamlData.get("species").getFirst())
-      .gender(yamlData.get("gender").getFirst())
+      .name(yamlData.get("name").get(0))
+      .species(yamlData.get("species").get(0))
+      .gender(yamlData.get("gender").get(0))
       .background(visitor.getContent())
       .build();
   }
@@ -59,13 +62,20 @@ public class MarkdownCompanionRepository implements CompanionStorage {
     Set<String> companionIds;
 
     try {
-      companionIds = Arrays.stream(new String(getClass().getClassLoader().getResourceAsStream("neighbors").readAllBytes())
-          .split("\n"))
+      PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+      var resolvedResources = resolver.getResources("classpath*:neighbors/**/*.md");
+
+      log.info("found companions: {}", Arrays.stream(resolvedResources).toList());
+
+      companionIds = Arrays.stream(resolvedResources)
+        .map(resource -> resource.getFilename().split("/"))
+        .map(filePath -> filePath[filePath.length - 1])
+        .map(filename -> filename.split("\\.")[0])
         .filter(id -> !id.isEmpty())
         .collect(Collectors.toSet());
-      ;
 
     } catch (IOException ex) {
+      log.error("fail to retrieve companions: {}", ex.getMessage());
       throw new CompanionRetrieveError("Fail to retrieve companion", ex);
     }
 

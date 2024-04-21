@@ -1,12 +1,10 @@
 spring:
   profiles:
     active: 'langchain,sqlite'
+  mvc:
+    view:
+      prefix: /static/
 
-  web:
-    resources:
-      static-locations:
-        - 'classpath:/static/'
-        - 'classpath:/neighbors/'
 logging:
   level:
     dev:
