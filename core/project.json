@@ -4,12 +4,6 @@
   "projectType": "application",
   "sourceRoot": "./core/src",
   "targets": {
-    "build": {
-      "options": {
-        "cwd": "core",
-        "command": "../gradlew -x test --dry-run build"
-      }
-    },
     "prebuild": {
       "options": {
         "commands": [
